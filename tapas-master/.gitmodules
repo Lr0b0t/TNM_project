@@ -1,4 +1,0 @@
-[submodule "wikidocs"]
-	path = PhysIO/wikidocs
-	url = https://gitlab.ethz.ch/physio/physio-doc.wiki.git
-	branch = master
