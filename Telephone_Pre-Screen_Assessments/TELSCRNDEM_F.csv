@@ -1,0 +1,76 @@
+SCRNO,ID,RID,SITEID,VISCODE,USERDATE,USERDATE2,DCOMPLETE,DSCHOOL,DRANK,DPAYGRADE,DMOS,DCOMBAT,DAWARD,DAWARDED,DAWARDOTH,DEMPLOY,DPRIMJOB,DCURRJOB,DJOBSP,DCURDET,DSNORE,DTIRED,DSTPBRTH,DHBP,DPARTNR,DPTRSPK,DINTCHECK,update_stamp
+88343,942,938,1,sc1va,2013-09-23,NaT,1,5,1,E7,"Infantry Paratrooper Ranger, and Special Forces - Green Beret",1,1,NaN,NaN,1,"Management Analyst",1,-4,NaN,1,1,1,1,1,1,1,2013-09-24 02:04:38.000
+80428,870,852,1,sc1va,2013-09-03,NaT,1,6,3,O5,"11B - Infantry",1,1,NaN,-4,1,"High school teacher",3,-4,-4,1,1,0,0,1,1,2,2013-09-07 02:04:39.000
+6315,112,63,1,sc1va,2013-01-03,2014-02-28,1,3,1,E4,"11B-20",1,1,NaN,NaN,1,"Postal Service",3,-4,-4,1,0,0,0,1,1,2,2014-03-01 02:05:50.000
+400117,4054,4352,1,sc1va,2018-04-04,NaT,1,2,1,E5,"05H",1,1,1,-4,1,"engineer / manufacturing engineer",3,-4,-4,1,1,1,1,0,NaN,2,2018-04-04 22:04:11.000
+398560,4036,4335,1,sc1va,2018-03-23,2018-03-23,1,2,1,E5,"844, Combat Coreman",1,1,2,-4,1,"Operations manager",3,-4,-4,0,1,1,0,0,NaN,2,2018-03-23 22:05:01.000
+396556,4012,4313,1,sc1va,2018-03-08,2018-03-21,1,5,1,E4,"Yeoman",0,0,-4,-4,1,"Policeman",3,-4,-4,1,1,1,1,1,1,2,2018-03-21 22:04:07.000
+395756,4000,4304,1,sc1va,2018-03-06,NaT,1,2,1,E4,"mechanic",1,0,-4,-4,1,"construction worker; residential",3,-4,-4,0,1,1,0,1,1,2,2018-03-06 22:04:07.000
+394956,3990,4294,1,sc1va,2018-02-28,NaT,1,2,2,W3,"Helicopter pilot",1,1,NaN,-4,1,"Pilot - commercial",3,-4,-4,0,0,0,0,1,1,2,2018-02-28 22:05:52.000
+392851,3966,4271,1,sc1va,2018-02-15,NaT,1,5,3,O3,"006 Pilot",1,1,4,NaN,1,"Insurance agent for 30 years",3,-4,-4,1,1,9,1,1,1,2,2018-02-15 22:04:01.000
+391748,3956,4257,1,sc1va,2018-02-09,NaT,1,2,1,E5,"combat infantry",1,1,4,NaN,1,"Warehouse forklift operator leader",3,-4,-4,1,0,0,1,1,1,2,2018-02-09 22:04:34.000
+391243,3946,4249,1,sc1va,2018-02-07,NaT,1,2,1,E5,"jet mechanic",1,0,-4,-4,1,"police officer; civilian and federal",3,-4,-4,1,1,0,1,1,0,2,2018-02-07 22:03:57.000
+375447,3760,4079,1,sc1va,2017-11-08,NaT,1,1,1,E3,"11B10",1,1,1,-4,1,"Tire store owner",3,-4,-4,1,0,0,1,1,0,2,2017-11-08 22:03:33.000
+350936,3432,3827,1,sc1va,2017-07-31,NaT,1,3,1,E5,"67170, 24270",0,0,-4,-4,1,"Assistant manager of a restaurant - make sure everything ran smoothly and correctly, products put out on time, customers happy",3,-4,-4,0,1,0,0,1,1,2,2017-07-31 22:10:40.000
+344638,3324,3761,1,sc1va,2017-06-30,NaT,1,6,1,E4,"engine mechanic",0,0,-4,-4,1,"Maintenance, cleaning housing authority took car of apartments",3,-4,-4,1,1,0,0,1,1,2,2017-06-30 22:11:12.000
+337944,3214,3691,1,sc1va,2017-05-30,NaT,1,2,1,E5,"11B, 13A",1,1,3,-4,1,"Small machine shop tool and gauge maker: building tools and gauges and fixtures for all around the world",3,-4,-4,0,0,0,1,1,1,2,2017-05-30 22:10:24.000
+337136,3204,3683,1,sc1va,2017-05-24,NaT,1,6,3,O5,"infantry/intelligence",1,1,NaN,NaN,1,"part time every ten years with the census - questionnaires house to house, community relations",3,-4,-4,1,1,1,1,1,1,2,2017-05-24 22:10:54.000
+334837,3178,3655,1,sc1va,2017-04-27,NaT,1,6,1,E4,"05C2P",1,0,-4,-4,1,"Director for non-profit",1,-4,NaN,0,1,0,0,1,1,2,2017-04-27 22:11:13.000
+317231,3036,3463,1,sc1va,2017-01-18,NaT,1,1,1,E7,"11B - Infantry",1,1,2,-4,1,"Quality Control for Honeywell",3,-4,-4,0,1,0,1,1,1,2,2017-01-18 22:18:27.000
+316835,3032,3459,1,sc1va,2017-01-17,NaT,1,2,1,E3,"Infantry",1,1,1,-4,1,"Transportation / Security",3,-4,-4,1,0,0,1,1,1,2,2017-01-17 22:18:04.000
+306731,2954,3345,1,sc1va,2016-11-07,NaT,1,5,1,E2,"91B20",0,0,-4,-4,1,"Machinist",3,-4,-4,1,1,1,1,1,1,2,2016-11-07 22:16:42.000
+304020,2936,3314,1,sc1va,2016-10-14,NaT,1,3,1,E5,"O311",1,1,NaN,-4,1,"Letter carrier",3,-4,-4,1,0,0,0,1,1,2,2016-10-14 22:22:11.000
+301519,2914,3288,1,sc1va,2016-09-26,2018-05-24,1,5,1,E9,"Fire control technician (aviation)",1,1,1,-4,1,"Accounting / Police officer",3,-4,-4,0,1,0,0,1,1,2,2018-05-24 22:03:59.000
+285951,2788,3117,1,sc1va,2016-06-16,NaT,1,3,1,E4,"11BRAVO",1,1,1,-4,1,"Letter carrier",3,-4,-4,1,1,1,0,1,1,2,2016-06-16 22:25:01.000
+282743,2770,3082,1,sc1va,2016-06-07,NaT,1,6,3,O4,"Intelligence",1,1,1,-4,1,"Worked in Terrorism Intelligence, later Teaching/Athletics - certified US Sailing Instructor.",3,-4,-4,0,1,0,1,0,NaN,2,2016-06-07 22:24:14.000
+282339,2768,3078,1,sc1va,2016-06-03,NaT,1,6,3,O6,"Health Services/Medical Service",1,1,NaN,NaN,1,"Hospital CEO",3,-4,-4,0,0,0,0,1,1,2,2016-06-03 22:27:37.000
+280840,2758,3062,1,sc1va,2016-05-31,NaT,1,6,3,O5,"1542",1,1,NaN,NaN,1,"Marketing director for a company",3,-4,-4,1,1,1,0,1,1,2,2016-05-31 22:24:15.000
+280032,2750,3053,1,sc1va,2016-05-26,NaT,1,5,3,O3,"7587 - radar intercept officer",1,1,NaN,NaN,1,"Reynolds - purchasing manager, director of strategic materials",3,-4,-4,0,1,0,1,0,NaN,2,2016-05-26 22:24:42.000
+279350,2740,3045,1,sc1va,2016-05-20,NaT,1,3,1,E8,"13Y5M",1,1,1,-4,1,"Senior Facilities Maintenance Man",3,-4,-4,0,1,0,1,1,1,2,2016-05-20 22:22:46.000
+276344,2708,3015,1,sc1va,2016-05-13,NaT,1,2,1,E5,"72-1-b20",9,1,4,NaN,1,"GM",3,-4,-4,1,0,0,0,1,0,1,2016-05-13 22:23:56.000
+274744,2692,2999,1,sc1va,2016-05-09,NaT,1,5,1,E7,"Welder Pipe Fitter",1,0,-4,-4,1,"Teacher: taught Marine engineering and welding, alternative behavior treatment center 14-18 year old vocational teacher (teaching to stock shelves in grocery stores, cleaning)",3,-4,-4,1,1,1,1,1,1,2,2016-05-09 22:23:48.000
+272740,2666,2978,1,sc1va,2016-05-03,NaT,1,3,1,E4,"finance",1,0,-4,-4,1,"train dispatcher",3,-4,-4,9,1,0,1,0,NaN,2,2016-05-03 22:22:18.000
+269852,2626,2949,1,sc1va,2016-04-22,NaT,1,3,1,E4,"EOH3 - equipment operator",0,0,-4,-4,1,"Welder/fabricator",3,-4,-4,0,1,0,1,1,1,2,2016-04-22 22:26:58.000
+267141,2582,2922,1,sc1va,2016-04-08,NaT,1,5,1,E6,"11B40 Infantry",1,1,4,NaN,1,"Carpenter '74 - mid-80's",3,-4,-4,9,0,0,0,1,0,2,2016-04-08 22:23:20.000
+262939,2530,2878,1,sc1va,2016-03-18,NaT,1,2,1,E4,"Security Police",1,1,2,-4,1,"Carpenter",3,-4,-4,0,1,0,1,1,1,2,2016-03-19 02:12:56.000
+261230,2502,2860,1,sc1va,2016-03-04,NaT,1,3,1,E4,"51 L 20",1,1,4,NaN,1,"contractor, professional firefighter, dive team",3,-4,-4,0,0,0,1,1,1,2,2016-03-05 02:12:39.000
+258948,2472,2835,1,sc1va,2016-02-16,NaT,1,2,1,E4,"O5H-20",1,1,4,NaN,1,"construction",3,-4,-4,0,0,0,1,0,NaN,1,2016-02-17 02:12:31.000
+258443,2468,2830,1,sc1va,2016-02-10,NaT,1,5,1,E4,"71A, Seaman in Army's Navy, or 7120",1,0,-4,-4,1,"22 years - Substitute Teacher in CT and FL. (Insurance Adjuster , 7years // Real Estate Agent, 5 years)",3,-4,-4,1,1,1,0,0,NaN,2,2016-02-11 02:12:15.000
+258140,2464,2827,1,sc1va,2016-02-10,2016-02-12,1,3,1,E7,"Personnel, 75Z",0,1,3,-4,1,"Marketing company",3,-4,-4,1,0,0,1,1,0,1,2016-02-13 02:11:53.000
+244533,2286,2679,1,sc1va,2015-10-30,NaT,1,2,1,E5,"different times it was different things",1,1,9,-4,1,"paramedic",3,-4,-4,1,1,1,1,1,1,2,2015-10-31 02:07:20.000
+244028,2276,2674,1,sc1va,2015-10-27,NaT,1,2,2,W4,"711A",1,1,3,-4,1,"Real Estate",3,-4,-4,1,1,1,0,1,1,2,2015-10-28 02:06:43.000
+238942,2218,2618,1,sc1va,2015-09-28,NaT,1,2,1,E4,"7011 or 4011",1,1,4,NaN,1,"AT&T - installation repairs technician",1,-4,NaN,0,1,1,9,1,0,2,2015-09-29 02:06:32.000
+237738,2194,2606,1,sc1va,2015-09-24,NaT,1,2,1,E4,"can't remember code Minitions Maintence",1,1,4,NaN,1,"Bus Driver",3,-4,-4,0,1,0,1,1,0,2,2015-09-25 02:06:41.000
+225327,2042,2468,1,sc1va,2015-06-19,NaT,1,6,1,E4,"O3-11",1,1,NaN,NaN,1,"Professional Educator, Community College + Ministry (professional clergy) @ Presbytarian",3,-4,-4,1,1,1,1,0,NaN,2,2015-06-20 02:07:13.000
+224931,2038,2463,1,sc1va,2015-06-17,NaT,1,2,1,E5,"92B-40 (med lab technician)",1,1,3,-4,1,"marketing @ AT&T",3,-4,-4,0,0,0,1,1,1,2,2015-06-18 02:07:18.000
+220923,2014,2412,1,sc1va,2015-05-18,NaT,1,3,1,E4,"artillery men",0,0,-4,-4,1,"letter carrier for UPS.",2,-4,-4,1,1,1,1,0,NaN,2,2015-05-19 02:07:20.000
+217126,1978,2370,1,sc1va,2015-04-17,2015-04-22,1,3,1,E7,"91-C4F",1,1,2,-4,1,"Environmental Science Technician. checked water to make sure chemically and biologically safe to consume.",3,-4,-4,0,1,1,1,1,1,2,2015-04-23 02:06:33.000
+216932,1976,2368,1,sc1va,2015-04-17,NaT,1,6,3,O5,"93-alpha. 81-aplha- 11-02",1,1,3,-4,1,"educational programs for farm kids. extension agent for youth. fort dietrich: systems analyst.",3,-4,-4,1,1,1,1,1,1,2,2015-04-18 02:06:32.000
+215122,1960,2350,1,sc1va,2015-04-13,NaT,1,2,1,E5,"18-11, tank crewmen.",1,1,NaN,NaN,1,"Sales, sales working with the public. retail.",3,-4,-4,1,1,0,0,1,1,2,2015-04-14 02:06:31.000
+214625,1952,2345,1,sc1va,2015-04-07,NaT,1,2,2,W4,"helicopter pilot (153Bravo)",1,1,NaN,NaN,1,"Production supervisor/shift supervisor",4,NaN,-4,0,1,0,0,1,0,1,2015-04-08 02:06:38.000
+212318,1934,2320,1,sc1va,2015-03-25,NaT,1,6,1,E5,"Infintry",1,0,-4,-4,1,"Custodian; Clerk;",1,-4,NaN,0,0,0,1,1,1,2,2015-03-26 02:07:39.000
+204420,1862,2233,1,sc1va,2015-02-04,NaT,1,6,1,E5,"Radarman/Communication technician",1,1,1,-4,1,"Washington State university- extension service. Organic Field Instructors for coffee farms + other farms.",1,-4,NaN,0,1,0,0,1,1,2,2015-02-05 02:07:37.000
+204319,1860,2232,1,sc1va,2015-02-04,NaT,1,5,1,E4,"13Alpha10 - Air Mobile Artillery Unity",1,1,NaN,NaN,1,"Lots of jobs,; Supermarket Business - Restaurant Business - Shipping Supervisor - Post-Office - Retired from the post office after 28 years: main duties, letter carrier and clerk, managed a little bit.",1,-4,NaN,1,0,0,1,0,NaN,2,2015-02-05 02:07:37.000
+203115,1850,2218,1,sc1va,2015-01-28,NaT,1,2,1,E4,"36 Charlie - Field Lineman",1,0,-4,-4,1,"Production worker for school stationary supply business - mechanic, floor leader.",3,-4,-4,1,1,0,0,0,NaN,2,2015-01-29 02:07:43.000
+199554,1832,2176,1,sc1va,2014-12-19,NaT,1,3,1,E5,"BM2",1,1,1,-4,1,"Road carrier - US Postal Services. deliver mail.",3,-4,-4,1,1,0,1,0,NaN,2,2014-12-20 02:07:35.000
+197752,1824,2156,1,sc1va,2014-12-10,NaT,1,5,1,E9,"administration",0,0,-4,-4,1,"business analyst - determine functions of businss and how to make work better. business manager - amagment of corpration.",3,-4,-4,1,1,1,1,1,1,2,2014-12-11 02:07:37.000
+193138,1788,2105,1,sc1va,2014-11-21,NaT,1,7,1,E5,"91 B 50 S - Special Forces Aid Man",1,1,NaN,-4,1,"Attorney in Florida",3,-4,-4,1,1,1,1,9,NaN,2,2014-11-22 02:07:47.000
+191942,1780,2093,1,sc1va,2014-11-17,NaT,1,3,1,E3,"0331 Machine Gunner",1,1,1,-4,1,"Construction Office (lobbied elected officials for civic development, Executive officer)",4,NaN,-4,1,1,1,1,1,0,2,2014-11-18 02:07:23.000
+191437,1776,2088,1,sc1va,2014-11-17,NaT,1,3,1,E4,"2532",1,0,-4,-4,1,"Draftsman, mechanical draftsman - (duties: making drawings to use to make parts in a machine shop)",3,-4,-4,1,1,1,1,1,1,2,2014-11-18 02:07:23.000
+185442,1730,2028,1,sc1va,2014-10-23,NaT,1,2,1,E6,"11 Bravo",1,1,NaN,-4,1,"Landscaping (planting trees around buildings, grass)",3,-4,-4,1,1,0,0,1,0,2,2014-10-24 02:07:46.000
+178647,1694,1957,1,sc1va,2014-10-01,NaT,1,2,1,E4,"Heavy equipment specialist, military police after vietnam",1,0,-4,-4,1,"40 jobs since Vietnam. Multiple mechanics and carpentry jobs. Skii jobs as well.",3,-4,-4,0,1,1,0,1,1,2,2014-10-02 02:07:42.000
+177746,1676,1948,1,sc1va,2014-09-26,NaT,1,2,1,E5,"Clerk Typist (doesn't quite remember the military name for him job)",1,0,-4,-4,1,"Supermarket / 9 years as a store manager.",1,-4,NaN,1,1,1,1,1,1,2,2014-09-27 02:07:42.000
+177544,1674,1945,1,sc1va,2014-09-25,NaT,1,6,1,E4,"Infantry",1,1,NaN,NaN,1,"Computer quality control - monitoring others for program compliance",1,-4,NaN,1,1,0,0,1,1,2,2014-09-26 02:07:40.000
+177342,1670,1943,1,sc1va,2014-09-25,NaT,1,5,3,O4,"Infantry and Military Police 951-111",1,1,3,-4,1,"Business management - responsible for profit loss, sales, and operations with American protective Services. Vice President for North America (was fired for hostile work environment).",3,-4,-4,1,1,1,1,1,1,2,2014-09-26 02:07:40.000
+171027,1602,1869,1,sc1va,2014-07-28,NaT,1,6,3,O7,"12B",1,1,NaN,-4,1,"Project Manager, Operations Director, Safety Director",3,-4,-4,1,1,1,0,1,1,2,2014-07-29 02:06:52.000
+168947,1590,1848,1,sc1va,2014-07-16,NaT,1,3,1,E5,"91b",1,1,3,-4,1,"Government Clerk",1,-4,NaN,0,0,0,0,1,1,2,2014-07-17 02:06:46.000
+168240,1588,1841,1,sc1va,2014-07-12,NaT,1,2,1,E7,"light wheel vehicle",1,0,-4,-4,1,"furniture repair.",1,-4,NaN,1,1,0,0,1,1,2,2014-07-13 02:06:44.000
+166034,1570,1816,1,sc1va,2014-07-01,NaT,1,6,3,O3,"Infantry Officer",1,1,1,-4,1,"Tried to teach for awhile, vet/pharm services",3,-4,-4,0,1,1,1,0,NaN,2,2014-07-02 02:06:42.000
+162531,1606,1774,1,sc1va,2014-07-31,NaT,1,3,1,E9,"64C - Transportation",1,0,-4,-4,1,"Postal Service",3,-4,-4,0,0,0,1,1,1,2,2014-08-01 02:06:53.000
+141624,1366,1530,1,sc1va,2014-02-21,NaT,1,6,3,O4,"surface line officer",1,1,1,-4,1,"self employed-wood working",3,-4,-4,0,1,0,1,1,1,2,2014-02-22 02:05:48.000
+140824,1362,1518,1,sc1va,2014-02-19,NaT,1,6,3,O6,"pilot",1,1,NaN,NaN,1,"Project manager for government contracts for the ballistic missile defense program",3,-4,-4,0,1,0,0,1,1,2,2014-02-20 23:41:52.000
+130013,1288,1394,1,sc1va,2014-01-08,NaT,1,3,3,O5,"Pilot",1,1,3,-4,1,"Plans and Operations Management officer for FEMA",3,-4,-4,0,1,0,0,1,1,2,2014-01-09 02:05:27.000
+129331,1286,1387,1,sc1va,2014-01-08,NaT,1,7,1,E7,"Weapons Specialist",1,0,-4,-4,1,"Emergency management",1,-4,NaN,1,0,1,1,1,1,2,2014-01-09 02:05:27.000
+127024,1272,1359,1,sc1va,2013-12-23,NaT,1,5,1,E5,"Air traffic control",1,1,NaN,NaN,1,"Contracts department",1,-4,NaN,0,1,0,0,0,NaN,2,2013-12-24 02:05:19.000
+120313,1218,1282,1,sc1va,2013-11-22,NaT,1,7,3,O5,"Intel, JAG",0,0,-4,-4,1,"Civil Service, Lawyer",3,-4,-4,0,0,0,0,1,1,2,2013-11-23 02:05:19.000
+119126,1204,1269,1,sc1va,2013-11-21,NaT,1,5,1,E5,"13E Fire Control",1,1,3,-4,1,"Accounting",1,-4,NaN,0,0,0,1,1,1,2,2013-11-22 02:05:17.000

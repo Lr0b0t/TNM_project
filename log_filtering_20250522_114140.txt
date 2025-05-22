@@ -1,0 +1,405 @@
+Deleted old filtered file: Biospecimen_Results/ADNIDOD_ALIQUOT_LIST_F.csv
+Deleted old filtered file: Biospecimen_Results/APOERES_F.csv
+Deleted old filtered file: Biospecimen_Results/BIOMARK_F.csv
+Deleted old filtered file: Biospecimen_Results/CLINCOLL_F.csv
+Deleted old filtered file: Biospecimen_Results/GENETIC_F.csv
+Deleted old filtered file: Biospecimen_Results/LOCLAB_F.csv
+Deleted old filtered file: Biospecimen_Results/UPENNBIOMK_DOD_2017_F.csv
+Deleted old filtered file: Biospecimen_Results/UPENNBIOMK_F.csv
+Deleted old filtered file: Biospecimen_Results/UPENN_MSMS_ABETA_F.csv
+34 of 206 rows retained for file: Biospecimen_Results/ADNIDOD_ALIQUOT_LIST.csv
+47 ID(s) missing in file: Biospecimen_Results/ADNIDOD_ALIQUOT_LIST.csv
+Missing IDs: 178647, 191437, 191942, 212318, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117
+======================= NEXT FILE ========================== 
+67 of 274 rows retained for file: Biospecimen_Results/APOERES.csv
+8 ID(s) missing in file: Biospecimen_Results/APOERES.csv
+Missing IDs: 267141, 276344, 280840, 282743, 304020, 317231, 334837, 337944
+======================= NEXT FILE ========================== 
+167 of 563 rows retained for file: Biospecimen_Results/BIOMARK.csv
+All IDs are present in file: Biospecimen_Results/BIOMARK.csv
+======================= NEXT FILE ========================== 
+80 of 394 rows retained for file: Biospecimen_Results/CLINCOLL.csv
+All IDs are present in file: Biospecimen_Results/CLINCOLL.csv
+======================= NEXT FILE ========================== 
+150 of 509 rows retained for file: Biospecimen_Results/GENETIC.csv
+All IDs are present in file: Biospecimen_Results/GENETIC.csv
+======================= NEXT FILE ========================== 
+76 of 306 rows retained for file: Biospecimen_Results/LOCLAB.csv
+All IDs are present in file: Biospecimen_Results/LOCLAB.csv
+======================= NEXT FILE ========================== 
+4 of 68 rows retained for file: Biospecimen_Results/UPENNBIOMK.csv
+71 ID(s) missing in file: Biospecimen_Results/UPENNBIOMK.csv
+Missing IDs: 120313, 127024, 129331, 130013, 140824, 141624, 166034, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 88343
+======================= NEXT FILE ========================== 
+36 of 145 rows retained for file: Biospecimen_Results/UPENNBIOMK_DOD_2017.csv
+39 ID(s) missing in file: Biospecimen_Results/UPENNBIOMK_DOD_2017.csv
+Missing IDs: 120313, 129331, 130013, 140824, 166034, 168240, 168947, 185442, 191437, 191942, 193138, 197752, 203115, 204319, 214625, 215122, 217126, 220923, 237738, 244028, 258140, 261230, 276344, 280032, 301519, 306731, 337136, 337944, 344638, 350936, 375447, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 88343
+======================= NEXT FILE ========================== 
+24 of 116 rows retained for file: Biospecimen_Results/UPENN_MSMS_ABETA.csv
+51 ID(s) missing in file: Biospecimen_Results/UPENN_MSMS_ABETA.csv
+Missing IDs: 120313, 129331, 130013, 140824, 166034, 168240, 168947, 178647, 185442, 191437, 191942, 193138, 197752, 203115, 204319, 214625, 215122, 217126, 220923, 237738, 244028, 258140, 258948, 261230, 267141, 276344, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 88343
+======================= NEXT FILE ========================== 
+Deleted old filtered file: Neuropsychological/ADAS_F.csv
+Deleted old filtered file: Neuropsychological/AFQTCHECK_F.csv
+Deleted old filtered file: Neuropsychological/AFQT_F.csv
+Deleted old filtered file: Neuropsychological/ASI_F.csv
+Deleted old filtered file: Neuropsychological/CAPSCURR_F.csv
+Deleted old filtered file: Neuropsychological/CAPSLIFE_F.csv
+Deleted old filtered file: Neuropsychological/CDR_F.csv
+Deleted old filtered file: Neuropsychological/CES_F.csv
+Deleted old filtered file: Neuropsychological/CRITERIONA_F.csv
+Deleted old filtered file: Neuropsychological/ECOGPT_F.csv
+Deleted old filtered file: Neuropsychological/ECOGSP_F.csv
+Deleted old filtered file: Neuropsychological/FAQ_F.csv
+Deleted old filtered file: Neuropsychological/GDSCALE_F.csv
+Deleted old filtered file: Neuropsychological/LSCR_F.csv
+Deleted old filtered file: Neuropsychological/MMSE_F.csv
+Deleted old filtered file: Neuropsychological/MOCA_F.csv
+Deleted old filtered file: Neuropsychological/MODHACH_F.csv
+Deleted old filtered file: Neuropsychological/NEUROBAT_F.csv
+Deleted old filtered file: Neuropsychological/NPI_F.csv
+Deleted old filtered file: Neuropsychological/PCLM_F.csv
+Deleted old filtered file: Neuropsychological/PREAFQT_F.csv
+Deleted old filtered file: Neuropsychological/PSQI_F.csv
+Deleted old filtered file: Neuropsychological/SF12_F.csv
+Deleted old filtered file: Neuropsychological/SHQ_F.csv
+Deleted old filtered file: Neuropsychological/SRQCHECK_F.csv
+174 of 593 rows retained for file: Neuropsychological/ADAS.csv
+All IDs are present in file: Neuropsychological/ADAS.csv
+======================= NEXT FILE ========================== 
+104 of 375 rows retained for file: Neuropsychological/AFQT.csv
+10 ID(s) missing in file: Neuropsychological/AFQT.csv
+Missing IDs: 237738, 280840, 301519, 344638, 375447, 391243, 391748, 392851, 394956, 395756
+======================= NEXT FILE ========================== 
+151 of 510 rows retained for file: Neuropsychological/AFQTCHECK.csv
+All IDs are present in file: Neuropsychological/AFQTCHECK.csv
+======================= NEXT FILE ========================== 
+72 of 696 rows retained for file: Neuropsychological/ASI.csv
+3 ID(s) missing in file: Neuropsychological/ASI.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+73 of 698 rows retained for file: Neuropsychological/CAPSCURR.csv
+3 ID(s) missing in file: Neuropsychological/CAPSCURR.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+73 of 691 rows retained for file: Neuropsychological/CAPSLIFE.csv
+3 ID(s) missing in file: Neuropsychological/CAPSLIFE.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+174 of 684 rows retained for file: Neuropsychological/CDR.csv
+All IDs are present in file: Neuropsychological/CDR.csv
+======================= NEXT FILE ========================== 
+67 of 310 rows retained for file: Neuropsychological/CES.csv
+10 ID(s) missing in file: Neuropsychological/CES.csv
+Missing IDs: 177342, 193138, 237738, 301519, 337944, 350936, 375447, 391243, 395756, 400117
+======================= NEXT FILE ========================== 
+73 of 697 rows retained for file: Neuropsychological/CRITERIONA.csv
+3 ID(s) missing in file: Neuropsychological/CRITERIONA.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+150 of 509 rows retained for file: Neuropsychological/ECOGPT.csv
+All IDs are present in file: Neuropsychological/ECOGPT.csv
+======================= NEXT FILE ========================== 
+151 of 508 rows retained for file: Neuropsychological/ECOGSP.csv
+All IDs are present in file: Neuropsychological/ECOGSP.csv
+======================= NEXT FILE ========================== 
+174 of 593 rows retained for file: Neuropsychological/FAQ.csv
+All IDs are present in file: Neuropsychological/FAQ.csv
+======================= NEXT FILE ========================== 
+151 of 605 rows retained for file: Neuropsychological/GDSCALE.csv
+All IDs are present in file: Neuropsychological/GDSCALE.csv
+======================= NEXT FILE ========================== 
+72 of 690 rows retained for file: Neuropsychological/LSCR.csv
+3 ID(s) missing in file: Neuropsychological/LSCR.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+174 of 686 rows retained for file: Neuropsychological/MMSE.csv
+All IDs are present in file: Neuropsychological/MMSE.csv
+======================= NEXT FILE ========================== 
+150 of 508 rows retained for file: Neuropsychological/MOCA.csv
+All IDs are present in file: Neuropsychological/MOCA.csv
+======================= NEXT FILE ========================== 
+75 of 382 rows retained for file: Neuropsychological/MODHACH.csv
+All IDs are present in file: Neuropsychological/MODHACH.csv
+======================= NEXT FILE ========================== 
+249 of 977 rows retained for file: Neuropsychological/NEUROBAT.csv
+All IDs are present in file: Neuropsychological/NEUROBAT.csv
+======================= NEXT FILE ========================== 
+151 of 508 rows retained for file: Neuropsychological/NPI.csv
+All IDs are present in file: Neuropsychological/NPI.csv
+======================= NEXT FILE ========================== 
+57 of 1932 rows retained for file: Neuropsychological/PCLM.csv
+18 ID(s) missing in file: Neuropsychological/PCLM.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 162531, 168240, 168947, 197752, 212318, 258948, 261230, 262939, 301519, 375447, 392851, 394956
+======================= NEXT FILE ========================== 
+64 of 292 rows retained for file: Neuropsychological/PREAFQT.csv
+11 ID(s) missing in file: Neuropsychological/PREAFQT.csv
+Missing IDs: 244028, 280840, 282339, 282743, 301519, 304020, 344638, 350936, 375447, 392851, 394956
+======================= NEXT FILE ========================== 
+108 of 417 rows retained for file: Neuropsychological/PSQI.csv
+6 ID(s) missing in file: Neuropsychological/PSQI.csv
+Missing IDs: 237738, 301519, 350936, 375447, 391243, 395756
+======================= NEXT FILE ========================== 
+107 of 416 rows retained for file: Neuropsychological/SF12.csv
+6 ID(s) missing in file: Neuropsychological/SF12.csv
+Missing IDs: 237738, 301519, 350936, 375447, 391243, 395756
+======================= NEXT FILE ========================== 
+108 of 418 rows retained for file: Neuropsychological/SHQ.csv
+6 ID(s) missing in file: Neuropsychological/SHQ.csv
+Missing IDs: 237738, 301519, 350936, 375447, 391243, 395756
+======================= NEXT FILE ========================== 
+150 of 601 rows retained for file: Neuropsychological/SRQCHECK.csv
+All IDs are present in file: Neuropsychological/SRQCHECK.csv
+======================= NEXT FILE ========================== 
+Deleted old filtered file: Diagnosis/BLCHANGE_F.csv
+Deleted old filtered file: Diagnosis/DXSUM_F.csv
+Deleted old filtered file: Diagnosis/SCID_F.csv
+Deleted old filtered file: Diagnosis/SCL90R_F.csv
+240 of 952 rows retained for file: Diagnosis/BLCHANGE.csv
+All IDs are present in file: Diagnosis/BLCHANGE.csv
+======================= NEXT FILE ========================== 
+243 of 955 rows retained for file: Diagnosis/DXSUM.csv
+All IDs are present in file: Diagnosis/DXSUM.csv
+======================= NEXT FILE ========================== 
+72 of 708 rows retained for file: Diagnosis/SCID.csv
+3 ID(s) missing in file: Diagnosis/SCID.csv
+Missing IDs: 162531, 396556, 398560
+======================= NEXT FILE ========================== 
+107 of 408 rows retained for file: Diagnosis/SCL90R.csv
+7 ID(s) missing in file: Diagnosis/SCL90R.csv
+Missing IDs: 237738, 301519, 350936, 375447, 391243, 395756, 396556
+======================= NEXT FILE ========================== 
+"SCRNO" column not found in file: study_info_Data___Database/DATADIC.csv
+"SCRNO" column not found in file: study_info_Data___Database/HIERARCHY.csv
+"SCRNO" column not found in file: study_info_Data___Database/MEDLIST.csv
+"SCRNO" column not found in file: study_info_Data___Database/TERM.csv
+Deleted old filtered file: Enrollment/ADDCOMM_F.csv
+Deleted old filtered file: Enrollment/CLIELG_F.csv
+Deleted old filtered file: Enrollment/CLIREV_F.csv
+Deleted old filtered file: Enrollment/MONELG_F.csv
+Deleted old filtered file: Enrollment/MONREV_F.csv
+Deleted old filtered file: Enrollment/OTELGTAU_F.csv
+Deleted old filtered file: Enrollment/PTSDELG_F.csv
+Deleted old filtered file: Enrollment/RECSMEREV_F.csv
+Deleted old filtered file: Enrollment/REGISTRY_F.csv
+Deleted old filtered file: Enrollment/ROSTER_F.csv
+Deleted old filtered file: Enrollment/SMEREV_F.csv
+Deleted old filtered file: Enrollment/TREATDIS_F.csv
+Deleted old filtered file: Enrollment/VAELG_F.csv
+Deleted old filtered file: Enrollment/VIOLOG_F.csv
+Deleted old filtered file: Enrollment/VISSCHED_F.csv
+632 of 15788 rows retained for file: Enrollment/ADDCOMM.csv
+All IDs are present in file: Enrollment/ADDCOMM.csv
+======================= NEXT FILE ========================== 
+150 of 716 rows retained for file: Enrollment/CLIELG.csv
+All IDs are present in file: Enrollment/CLIELG.csv
+======================= NEXT FILE ========================== 
+231 of 771 rows retained for file: Enrollment/CLIREV.csv
+All IDs are present in file: Enrollment/CLIREV.csv
+======================= NEXT FILE ========================== 
+150 of 716 rows retained for file: Enrollment/MONELG.csv
+All IDs are present in file: Enrollment/MONELG.csv
+======================= NEXT FILE ========================== 
+230 of 836 rows retained for file: Enrollment/MONREV.csv
+All IDs are present in file: Enrollment/MONREV.csv
+======================= NEXT FILE ========================== 
+70 of 202 rows retained for file: Enrollment/OTELGTAU.csv
+30 ID(s) missing in file: Enrollment/OTELGTAU.csv
+Missing IDs: 127024, 129331, 141624, 166034, 168240, 168947, 177544, 177746, 178647, 185442, 193138, 197752, 204319, 220923, 244028, 258140, 258443, 258948, 262939, 267141, 316835, 317231, 334837, 375447, 392851, 395756, 396556, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+70 of 708 rows retained for file: Enrollment/PTSDELG.csv
+5 ID(s) missing in file: Enrollment/PTSDELG.csv
+Missing IDs: 162531, 301519, 304020, 396556, 398560
+======================= NEXT FILE ========================== 
+8 of 269 rows retained for file: Enrollment/RECSMEREV.csv
+68 ID(s) missing in file: Enrollment/RECSMEREV.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 304020, 306731, 316835, 317231, 334837, 337136, 344638, 375447, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 80428, 88343
+======================= NEXT FILE ========================== 
+766 of 8103 rows retained for file: Enrollment/REGISTRY.csv
+All IDs are present in file: Enrollment/REGISTRY.csv
+======================= NEXT FILE ========================== 
+150 of 4609 rows retained for file: Enrollment/ROSTER.csv
+All IDs are present in file: Enrollment/ROSTER.csv
+======================= NEXT FILE ========================== 
+222 of 3813 rows retained for file: Enrollment/SMEREV.csv
+All IDs are present in file: Enrollment/SMEREV.csv
+======================= NEXT FILE ========================== 
+3 of 124 rows retained for file: Enrollment/TREATDIS.csv
+72 ID(s) missing in file: Enrollment/TREATDIS.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+225 of 5955 rows retained for file: Enrollment/VAELG.csv
+All IDs are present in file: Enrollment/VAELG.csv
+======================= NEXT FILE ========================== 
+102 of 524 rows retained for file: Enrollment/VIOLOG.csv
+26 ID(s) missing in file: Enrollment/VIOLOG.csv
+Missing IDs: 120313, 130013, 141624, 162531, 168947, 171027, 177746, 191437, 197752, 199554, 204319, 214625, 216932, 217126, 238942, 244533, 258948, 261230, 279350, 280032, 280840, 282743, 285951, 316835, 334837, 337136
+======================= NEXT FILE ========================== 
+"SCRNO" column not found in file: Enrollment/VISITS.csv
+3 of 31 rows retained for file: Enrollment/VISSCHED.csv
+72 ID(s) missing in file: Enrollment/VISSCHED.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+Deleted old filtered file: Subject_Characteristics/FHQ_F.csv
+Deleted old filtered file: Subject_Characteristics/PTDEMOG_F.csv
+Deleted old filtered file: Subject_Characteristics/RECFHQ_F.csv
+76 of 385 rows retained for file: Subject_Characteristics/FHQ.csv
+All IDs are present in file: Subject_Characteristics/FHQ.csv
+======================= NEXT FILE ========================== 
+"SCRNO" column not found in file: Subject_Characteristics/INFDEMOG.csv
+75 of 384 rows retained for file: Subject_Characteristics/PTDEMOG.csv
+All IDs are present in file: Subject_Characteristics/PTDEMOG.csv
+======================= NEXT FILE ========================== 
+239 of 1290 rows retained for file: Subject_Characteristics/RECFHQ.csv
+All IDs are present in file: Subject_Characteristics/RECFHQ.csv
+======================= NEXT FILE ========================== 
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/MCISERIES_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/MCISRIESFU_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/PSYCHALCFU_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/PSYCHALC_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/RECTBIINJ_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/RECTBIOD_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TAUPHONE_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TBISERIES_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TBISRIESFU_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELCHECK_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELDEMFU_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELSCRNDEM_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELSCRNFU_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELSCRNMED_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TELSCRN_F.csv
+Deleted old filtered file: Telephone_Pre-Screen_Assessments/TICS_F.csv
+75 of 2265 rows retained for file: Telephone_Pre-Screen_Assessments/MCISERIES.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/MCISERIES.csv
+======================= NEXT FILE ========================== 
+73 of 242 rows retained for file: Telephone_Pre-Screen_Assessments/MCISRIESFU.csv
+2 ID(s) missing in file: Telephone_Pre-Screen_Assessments/MCISRIESFU.csv
+Missing IDs: 395756, 398560
+======================= NEXT FILE ========================== 
+75 of 2665 rows retained for file: Telephone_Pre-Screen_Assessments/PSYCHALC.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/PSYCHALC.csv
+======================= NEXT FILE ========================== 
+73 of 242 rows retained for file: Telephone_Pre-Screen_Assessments/PSYCHALCFU.csv
+2 ID(s) missing in file: Telephone_Pre-Screen_Assessments/PSYCHALCFU.csv
+Missing IDs: 395756, 398560
+======================= NEXT FILE ========================== 
+109 of 2623 rows retained for file: Telephone_Pre-Screen_Assessments/RECTBIINJ.csv
+17 ID(s) missing in file: Telephone_Pre-Screen_Assessments/RECTBIINJ.csv
+Missing IDs: 119126, 120313, 129331, 130013, 162531, 168947, 177342, 191437, 197752, 203115, 237738, 258443, 316835, 334837, 391243, 400117, 80428
+======================= NEXT FILE ========================== 
+6 of 95 rows retained for file: Telephone_Pre-Screen_Assessments/RECTBIOD.csv
+72 ID(s) missing in file: Telephone_Pre-Screen_Assessments/RECTBIOD.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 166034, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 304020, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+67 of 180 rows retained for file: Telephone_Pre-Screen_Assessments/TAUPHONE.csv
+32 ID(s) missing in file: Telephone_Pre-Screen_Assessments/TAUPHONE.csv
+Missing IDs: 127024, 129331, 141624, 166034, 168240, 168947, 177544, 177746, 178647, 185442, 193138, 197752, 204319, 220923, 238942, 244028, 258140, 258443, 258948, 262939, 267141, 282743, 316835, 317231, 334837, 375447, 395756, 396556, 398560, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+75 of 2859 rows retained for file: Telephone_Pre-Screen_Assessments/TBISERIES.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/TBISERIES.csv
+======================= NEXT FILE ========================== 
+73 of 242 rows retained for file: Telephone_Pre-Screen_Assessments/TBISRIESFU.csv
+2 ID(s) missing in file: Telephone_Pre-Screen_Assessments/TBISRIESFU.csv
+Missing IDs: 395756, 398560
+======================= NEXT FILE ========================== 
+75 of 268 rows retained for file: Telephone_Pre-Screen_Assessments/TELCHECK.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/TELCHECK.csv
+======================= NEXT FILE ========================== 
+73 of 242 rows retained for file: Telephone_Pre-Screen_Assessments/TELDEMFU.csv
+2 ID(s) missing in file: Telephone_Pre-Screen_Assessments/TELDEMFU.csv
+Missing IDs: 395756, 398560
+======================= NEXT FILE ========================== 
+75 of 4186 rows retained for file: Telephone_Pre-Screen_Assessments/TELSCRN.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/TELSCRN.csv
+======================= NEXT FILE ========================== 
+75 of 2211 rows retained for file: Telephone_Pre-Screen_Assessments/TELSCRNDEM.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/TELSCRNDEM.csv
+======================= NEXT FILE ========================== 
+73 of 243 rows retained for file: Telephone_Pre-Screen_Assessments/TELSCRNFU.csv
+2 ID(s) missing in file: Telephone_Pre-Screen_Assessments/TELSCRNFU.csv
+Missing IDs: 395756, 398560
+======================= NEXT FILE ========================== 
+Warning: No filtering occurred (all rows retained) in file: Telephone_Pre-Screen_Assessments/TELSCRNMED.csv
+75 ID(s) missing in file: Telephone_Pre-Screen_Assessments/TELSCRNMED.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 166034, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+148 of 2448 rows retained for file: Telephone_Pre-Screen_Assessments/TICS.csv
+All IDs are present in file: Telephone_Pre-Screen_Assessments/TICS.csv
+======================= NEXT FILE ========================== 
+Deleted old filtered file: medical history/Adverse_Events/AECHECK_F.csv
+Deleted old filtered file: medical history/Adverse_Events/RECADVPRE_F.csv
+Deleted old filtered file: medical history/Adverse_Events/RECADV_F.csv
+Deleted old filtered file: medical history/Adverse_Events/SAE_F.csv
+150 of 506 rows retained for file: medical history/Adverse_Events/AECHECK.csv
+All IDs are present in file: medical history/Adverse_Events/AECHECK.csv
+======================= NEXT FILE ========================== 
+287 of 1021 rows retained for file: medical history/Adverse_Events/RECADV.csv
+All IDs are present in file: medical history/Adverse_Events/RECADV.csv
+======================= NEXT FILE ========================== 
+Warning: No filtering occurred (all rows retained) in file: medical history/Adverse_Events/RECADVPRE.csv
+75 ID(s) missing in file: medical history/Adverse_Events/RECADVPRE.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 166034, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+13 of 56 rows retained for file: medical history/Adverse_Events/SAE.csv
+66 ID(s) missing in file: medical history/Adverse_Events/SAE.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 166034, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 199554, 203115, 204319, 204420, 212318, 214625, 216932, 217126, 224931, 225327, 237738, 238942, 244028, 258140, 258443, 258948, 261230, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 395756, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+Deleted old filtered file: medical history/Drugs/BACKMEDS_F.csv
+Deleted old filtered file: medical history/Drugs/RECCMEDS_F.csv
+225 of 890 rows retained for file: medical history/Drugs/BACKMEDS.csv
+All IDs are present in file: medical history/Drugs/BACKMEDS.csv
+======================= NEXT FILE ========================== 
+949 of 4493 rows retained for file: medical history/Drugs/RECCMEDS.csv
+All IDs are present in file: medical history/Drugs/RECCMEDS.csv
+======================= NEXT FILE ========================== 
+Deleted old filtered file: medical history/Medical_History/MEDHIST_F.csv
+Deleted old filtered file: medical history/Medical_History/MEDHXSELF_F.csv
+Deleted old filtered file: medical history/Medical_History/MEDSRQ_F.csv
+Deleted old filtered file: medical history/Medical_History/NPSTATUS_F.csv
+Deleted old filtered file: medical history/Medical_History/RECBLLOG_F.csv
+Deleted old filtered file: medical history/Medical_History/RECMHIST_F.csv
+Deleted old filtered file: medical history/Medical_History/RECMHXSEL_F.csv
+75 of 383 rows retained for file: medical history/Medical_History/MEDHIST.csv
+All IDs are present in file: medical history/Medical_History/MEDHIST.csv
+======================= NEXT FILE ========================== 
+75 of 921 rows retained for file: medical history/Medical_History/MEDHXSELF.csv
+All IDs are present in file: medical history/Medical_History/MEDHXSELF.csv
+======================= NEXT FILE ========================== 
+591 of 7958 rows retained for file: medical history/Medical_History/MEDSRQ.csv
+All IDs are present in file: medical history/Medical_History/MEDSRQ.csv
+======================= NEXT FILE ========================== 
+150 of 509 rows retained for file: medical history/Medical_History/NPSTATUS.csv
+All IDs are present in file: medical history/Medical_History/NPSTATUS.csv
+======================= NEXT FILE ========================== 
+350 of 1828 rows retained for file: medical history/Medical_History/RECBLLOG.csv
+All IDs are present in file: medical history/Medical_History/RECBLLOG.csv
+======================= NEXT FILE ========================== 
+1006 of 5219 rows retained for file: medical history/Medical_History/RECMHIST.csv
+All IDs are present in file: medical history/Medical_History/RECMHIST.csv
+======================= NEXT FILE ========================== 
+316 of 4090 rows retained for file: medical history/Medical_History/RECMHXSEL.csv
+3 ID(s) missing in file: medical history/Medical_History/RECMHXSEL.csv
+Missing IDs: 204420, 267141, 306731
+======================= NEXT FILE ========================== 
+Deleted old filtered file: medical history/Physical_Neurological_Exams/AV45VITALS_F.csv
+Deleted old filtered file: medical history/Physical_Neurological_Exams/BLSCHECK_F.csv
+Deleted old filtered file: medical history/Physical_Neurological_Exams/NEUROEXM_F.csv
+Deleted old filtered file: medical history/Physical_Neurological_Exams/PHYSICAL_F.csv
+Deleted old filtered file: medical history/Physical_Neurological_Exams/VITALS_F.csv
+Warning: No filtering occurred (all rows retained) in file: medical history/Physical_Neurological_Exams/AV45VITALS.csv
+75 ID(s) missing in file: medical history/Physical_Neurological_Exams/AV45VITALS.csv
+Missing IDs: 119126, 120313, 127024, 129331, 130013, 140824, 141624, 162531, 166034, 168240, 168947, 171027, 177342, 177544, 177746, 178647, 185442, 191437, 191942, 193138, 197752, 199554, 203115, 204319, 204420, 212318, 214625, 215122, 216932, 217126, 220923, 224931, 225327, 237738, 238942, 244028, 244533, 258140, 258443, 258948, 261230, 262939, 267141, 269852, 272740, 274744, 276344, 279350, 280032, 280840, 282339, 282743, 285951, 301519, 304020, 306731, 316835, 317231, 334837, 337136, 337944, 344638, 350936, 375447, 391243, 391748, 392851, 394956, 395756, 396556, 398560, 400117, 6315, 80428, 88343
+======================= NEXT FILE ========================== 
+75 of 383 rows retained for file: medical history/Physical_Neurological_Exams/BLSCHECK.csv
+All IDs are present in file: medical history/Physical_Neurological_Exams/BLSCHECK.csv
+======================= NEXT FILE ========================== 
+75 of 383 rows retained for file: medical history/Physical_Neurological_Exams/NEUROEXM.csv
+All IDs are present in file: medical history/Physical_Neurological_Exams/NEUROEXM.csv
+======================= NEXT FILE ========================== 
+75 of 383 rows retained for file: medical history/Physical_Neurological_Exams/PHYSICAL.csv
+All IDs are present in file: medical history/Physical_Neurological_Exams/PHYSICAL.csv
+======================= NEXT FILE ========================== 
+226 of 892 rows retained for file: medical history/Physical_Neurological_Exams/VITALS.csv
+All IDs are present in file: medical history/Physical_Neurological_Exams/VITALS.csv
+======================= NEXT FILE ========================== 
+Processing complete.
