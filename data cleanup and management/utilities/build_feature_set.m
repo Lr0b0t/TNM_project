@@ -9,27 +9,35 @@ clc; close all; clear;
 %
 % Important:
 %   - Files used and corresponding extracted columns:
-%       * CDR_cleaned_sc.csv        -> CDSOB
+%       * CDR_cleaned_sc.csv        -> CDSOB (note: -1 values replaced with NaN)
 %       * GDSCALE_cleaned_sc.csv    -> GDTOTAL
 %       * MMSE_cleaned_sc.csv       -> MMSCORE
 %       * CAPSLIFE_cleaned.csv      -> CAPSSCORE (renamed CAPSSCORELIFE)
 %       * CAPSCURR_cleaned.csv      -> CAPSSCORE (renamed CAPSSCORECURR)
 %       * NEUROBAT_cleaned.csv      -> ANARTERR
 %       * CES_cleaned.csv           -> CES1A, CES2, CES3A, CES4, CES5, CES6, CES7
+%       * sub_diagnosis_n88.csv     -> group_1_4__4_NC__3_PTSD_TBI__2_PTSD__1_TBI_
+%                                    (renamed PATIENTGROUP, matched to SCRNO via 'sub' column)
+%       * basic_imaging_information_for_every_subject.csv -> Age, Weight
+%                                    (matched to SCRNO via valid SubjectIDs)
 %
-%   - All files are expected in the 'Neuropsychological Useful data' folder.
+%   - All files are expected in the 'Neuropsychological Useful data' folder,
+%     except sub_diagnosis_n88.csv, which must be manually placed in the 'utilities' folder,
+%     and basic_imaging_information_for_every_subject.csv located in 'find eligible ids' folder.
 %   - The reference list of unique patient IDs comes from unique_patient_ids.csv.
 %   - FAQ_cleaned_bl.csv was not used due to excessive missing data.
 %
 % Output:
 %   - A master CSV file containing:
-%     SCRNO | CDSOB | GDTOTAL | MMSCORE | CAPSSCORELIFE | CAPSSCORECURR | ANARTERR | CES1A ... CES7
+%     SCRNO | CDSOB | GDTOTAL | MMSCORE | CAPSSCORELIFE | CAPSSCORECURR | ANARTERR | CES1A ... CES7 | PATIENTGROUP | Age | Weight
 % -------------------------------------------------------------------------
 
 % Define paths
 baseFolder      = fileparts(pwd);  % assuming script is in 'utilities'
 dataFolder      = fullfile(baseFolder, 'Neuropsychological Useful data');
 uniqueIDFile    = fullfile(baseFolder, 'utilities', 'unique_patient_ids.csv');
+diagnosisFile = fullfile(baseFolder, 'utilities', 'sub_diagnosis_n88.csv');
+basicImagingFile = fullfile(baseFolder, 'find eligible ids', 'basic_imaging_information_for_every_subject.csv');
 
 % Output path
 finalFolder     = fullfile(baseFolder, 'final files');
@@ -49,6 +57,10 @@ master = table(uniqueIDs, 'VariableNames', {'SCRNO'});
 fprintf('Loading CDSOB from CDR...\n');
 T = readtable(fullfile(dataFolder, 'CDR_cleaned_sc.csv'));
 T = T(:, {'SCRNO', 'CDSOB'});
+
+% Replace -1 with NaN in CDSOB, because -1 indicates a missing value
+T.CDSOB(T.CDSOB == -1) = NaN;
+
 master = outerjoin(master, T, 'Keys', 'SCRNO', 'MergeKeys', true);
 
 % ------------------- GDTOTAL from GDSCALE -------------------
@@ -89,6 +101,43 @@ T = readtable(fullfile(dataFolder, 'CES_cleaned.csv'));
 cesCols = {'SCRNO', 'CES1A', 'CES2', 'CES3A', 'CES4', 'CES5', 'CES6', 'CES7'};
 T = T(:, cesCols);
 master = outerjoin(master, T, 'Keys', 'SCRNO', 'MergeKeys', true);
+
+% ------------------- PATIENTGROUP from sub_diagnosis_n88.csv ----------------
+fprintf('Loading PATIENTGROUP from sub_diagnosis_n88.csv...\n');
+T = readtable(diagnosisFile);
+
+
+% Select only relevant columns
+T = T(:, {'sub', 'group_1_4_4_NC_3_PTSD_TBI_2_PTSD_1_TBI_'});
+
+% Rename for merging
+ T.Properties.VariableNames = {'SCRNO', 'PATIENTGROUP'};
+
+% Merge with master table
+master = outerjoin(master, T, 'Keys', 'SCRNO', 'MergeKeys', true);
+
+% ------------------- Add Age and Weight from basic_imaging_information_for_every_subject.csv -------------
+fprintf('Loading Age and Weight from basic imaging info...\n');
+basicData = readtable(basicImagingFile);
+
+% Extract only SubjectID, Age, Weight
+basicData = basicData(:, {'SubjectID', 'Age', 'Weight'});
+
+% Filter basicData to only those SubjectID present in master.SCRNO
+isInMaster = ismember(basicData.SubjectID, master.SCRNO);
+basicData = basicData(isInMaster, :);
+
+% Remove duplicate SubjectID entries, keep the first occurrence only
+[~, uniqueIdx] = unique(basicData.SubjectID, 'stable'); % 'stable' keeps original order
+basicData = basicData(uniqueIdx, :);
+
+% Rename SubjectID to SCRNO for merging
+basicData.Properties.VariableNames{'SubjectID'} = 'SCRNO';
+
+% Merge filtered Age and Weight into master table by SCRNO
+master = outerjoin(master, basicData, 'Keys', 'SCRNO', 'MergeKeys', true);
+
+
 
 % ------------------- Save Final Feature File ----------------
 writetable(master, outputFile);

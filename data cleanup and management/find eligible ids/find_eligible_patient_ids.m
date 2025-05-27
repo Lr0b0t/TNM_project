@@ -10,6 +10,8 @@ clc; close all; clear;
 %       - GDSCALE.csv
 %       - MMSE.csv
 %       - CDR.csv
+%   - Excludes specific SCRNOs due to poor imaging quality:
+%       * 168947, 196043, 228333
 %
 % Requirements:
 %   - All files should be placed according to the described structure.
@@ -54,11 +56,14 @@ idsCDR = getEligibleIDs('CDR.csv');
 eligibleIDs = intersect(intersect(idsGDS, idsMMSE), idsCDR);
 finalEligibleIDs = intersect(eligibleIDs, allIDs);
 
+% Exclude bad-quality subjects
+excludedIDs = [168947; 196043; 228333];
+finalEligibleIDs = setdiff(finalEligibleIDs, excludedIDs);
+
 % Display results
-fprintf('\nTotal eligible IDs found: %d\n', numel(finalEligibleIDs));
+fprintf('\nTotal eligible IDs found (after exclusion): %d\n', numel(finalEligibleIDs));
 disp('List of eligible SCRNOs:');
 disp(finalEligibleIDs);
-
 
 % Save eligible IDs to a CSV file (no headers) in the utilities folder
 utilitiesFolder = fullfile(baseFolder, 'utilities');
@@ -72,15 +77,14 @@ writematrix(finalEligibleIDs, outputFile, 'FileType', 'text');
 fprintf('Eligible IDs saved to: %s\n', outputFile);
 
 
-% --- Local Function ---
 function ids = getIDsWithSCandM12(filePath)
     T = readtable(filePath);
-    
+
     % Ensure SCRNO and VISCODE columns exist
     if ~all(ismember({'SCRNO', 'VISCODE'}, T.Properties.VariableNames))
         error('File %s must contain SCRNO and VISCODE columns.', filePath);
     end
-    
+
     % Remove rows with VISCODE 'tau' or 'tau2'
     viscode = lower(strtrim(T.VISCODE));
     isValid = ~(strcmp(viscode, 'tau') | strcmp(viscode, 'tau2'));
@@ -93,5 +97,3 @@ function ids = getIDsWithSCandM12(filePath)
 
     ids = intersect(idsWithSC, idsWithM12);
 end
-
-

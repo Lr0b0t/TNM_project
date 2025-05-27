@@ -34,7 +34,7 @@ finalFolder       = fullfile(baseFolder, 'final files');
 if ~exist(finalFolder, 'dir')
     mkdir(finalFolder);
 end
-outputFile        = fullfile(finalFolder, 'followup_master_m12.csv');
+outputFile = fullfile(finalFolder, 'followup_m12_master.csv');
 
 % Load list of unique patient IDs
 uniqueIDs = readtable(uniqueIDFile, 'ReadVariableNames', false);
