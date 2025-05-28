@@ -187,7 +187,7 @@ writetable(neurobatData, outputFile);
 
 
 %% SHQ file (full name: Smoking History Questionnaire)
-% NOTE: probably dont do this because of data inconsistencies
+% NOTE: we decided not to keep this one because of data inconsistencies
 % % Load SHQ.csv file
 % shqFile = fullfile(inputFolder, 'SHQ.csv');
 % shqData = readtable(shqFile);
