@@ -1,41 +1,40 @@
 clc; close all; clear;
 
-
-% -------------------------------------------------------------------------
+%--------------------------------------------------------------------------
 %
 % Purpose:
-% Splits the input dataset (which is well known that contain NaNs) into a 
-% training set and a test set.
+%   Randomly split the input dataset (which is well known that contain 
+%   NaNs) into training and test sets.
 %
-% Key constraint: 
-% - The test set must contain **only fully observed rows** 
-%   (i.e., rows with no missing values).
-% - All rows with at least one NaN are forced into the training set.
-%
-% This avoids data leakage and ensures clean model evaluation.
-% We want to avoid any data leakage as well as ensure that the test set
-% contains only observed values.
-%
-% -------------------------------------------------------------------------
-% Input:
+% Inputs:
 %   - CSV file: ../final files/feature_set_master.csv
-%     This file should contain:
-%       - Predictive features for regression 
-%       - A unique identifier column named 'SCRNO'
-%
-%   - Additionally, one-year follow-up features will be appended by
-%     automatically merging with:
-%       ../final files/feature_set_followup_master.csv
-%     based on matching SCRNO IDs.
+%       Contains baseline predictive features and a unique 'SCRNO' column.
+%   - CSV file: ../final files/followup_m12_master.csv
+%       Contains follow-up features, including 'SCRNO' for joining.
 %
 % Output:
-%   - train_features.csv : Training set (rows with or without NaNs)
-%   - test_features.csv  : Test set (only rows with complete data)
+%   - train_features_Q2.csv: 
+%         Training set (random 80% of rows, includes missing values)
+%   - test_features_Q2.csv:  
+%         Test set (random 20% of rows, includes missing values)
+%   - Resulting files will be saved in the ../final files/ folder
 %
-% Usage:
-%   - Run in the 'utilities' directory.
+% Key characteristics:
+%   - The test set may contain missing values.
+%   - Both splits preserve the original missing data distribution.
+%   - No information from the test set is leaked into the training set.
+%   - The random split is reproducible (fixed RNG seed).
+%
+%
+% Notes:
+%   - This script does not perform any imputation.
+%   - For downstream analysis, we will apply MICE or mean estimation for
+%   the NaNs to both train and test sets.
+%   - The script reports the number and proportion of complete (NaN-free)
+%     rows in each split for quality control.
 %
 %--------------------------------------------------------------------------
+
 
 % Define input paths
 baseDir = fullfile('..', 'final files');
@@ -48,35 +47,38 @@ baseline = readtable(featureFile);
 % Load follow-up data
 followUp = readtable(followUpFile);
 
-
-% Remove SCRNO from follow-up table temporarily to avoid duplication
-% followUpVarsOnly = followUp(:, setdiff(followUp.Properties.VariableNames, {'SCRNO'}));
-
 % Merge follow-up data to baseline by SCRNO
 data = outerjoin(baseline, followUp, ...
     'Keys', 'SCRNO', ...
     'MergeKeys', true, ...
     'Type', 'left');
 
-% Find rows with any missing values (across all columns now)
-hasMissing = any(ismissing(data), 2);
+% (Optionally) Remove completely empty rows (rare)
+allMissing = all(ismissing(data), 2);
+if any(allMissing)
+    fprintf('Removed %d completely empty rows.\n', sum(allMissing));
+    data = data(~allMissing, :);
+end
 
-% Extract complete rows (eligible for test set)
-completeRows = data(~hasMissing, :);
-
-% Select ~20% for test set
+% Randomly split into train/test (e.g., 80/20)
+rng(42); % For reproducibility
 nTotal = height(data);
 nTest = round(0.2 * nTotal);
 
-rng(42);  % For reproducibility
-perm = randperm(height(completeRows));
-testSet = completeRows(perm(1:min(nTest, height(completeRows))), :);
+perm = randperm(nTotal);
+testRows = perm(1:nTest);
+trainRows = perm(nTest+1:end);
 
-% Identify test SCRNOs
-testIdx = ismember(data.SCRNO, testSet.SCRNO);
+testSet = data(testRows, :);
+trainSet = data(trainRows, :);
 
-% Assign remaining to training set
-trainSet = data(~testIdx, :);
+% (Optional) Report % complete rows in each set
+fprintf('Train set: %d rows, %d (%.1f%%) fully complete rows\n', ...
+    height(trainSet), sum(~any(ismissing(trainSet),2)), ...
+    100*sum(~any(ismissing(trainSet),2))/height(trainSet));
+fprintf('Test set:  %d rows, %d (%.1f%%) fully complete rows\n', ...
+    height(testSet), sum(~any(ismissing(testSet),2)), ...
+    100*sum(~any(ismissing(testSet),2))/height(testSet));
 
 % Output file paths
 trainFile = fullfile(baseDir, 'train_features_Q2.csv');
@@ -87,4 +89,4 @@ writetable(trainSet, trainFile);
 writetable(testSet, testFile);
 
 fprintf('Train set saved to %s (%d rows)\n', trainFile, height(trainSet));
-fprintf('Test set saved to %s (%d rows, no NaNs)\n', testFile, height(testSet));
+fprintf('Test set saved to %s (%d rows)\n', testFile, height(testSet));
