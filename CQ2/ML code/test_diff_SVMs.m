@@ -273,13 +273,7 @@ function results = run_nested_cv_svm(X_train, Y_train, X_test, Y_test, Y_test_ba
     results.Y_test_pred = Y_test_pred;
     results.regression = struct('rmse', rmse, 'mae', mae, 'r2', r2);
 
-    % Group jump reporting
-    if nargin > 4 && ~isempty(Y_test_baseline)
-        fprintf('\nTest set group-jump metrics (using last year MMSE as baseline):\n');
-        group_jump_report(Y_test, Y_test_pred, Y_test_baseline);
-    else
-        fprintf('\n[Note: Group-jump metrics require baseline MMSE for the test set.]\n');
-    end
+    
 end
 
 function [mean_rmse, mean_r2] = svm_inner_cv_r2(X, Y, cv, kernel, C, sigma, polyorder, eps)

@@ -46,7 +46,7 @@ rng(42, 'twister');
 
 
 
-baseDir = fullfile('..', 'final files');
+baseDir = fullfile('..','..', 'data cleanup and management', 'final files');
 trainFile = fullfile(baseDir, 'train_features_Q2_imputed.csv');
 testFile  = fullfile(baseDir, 'test_features_Q2_imputed.csv');
 
@@ -115,7 +115,7 @@ function results = run_nested_cv_adaboost(X_train, Y_train, X_test, Y_test, Y_te
         Y_outerTest = Y_train(testIdx);
 
         innerCV = cvpartition(size(X_outerTrain, 1), 'KFold', innerK);
-        bestRMSE = Inf;
+        bestRMSE = -Inf;
         hyperparamTable = [];
 
         for numCycles = numCycles_values
@@ -139,7 +139,7 @@ function results = run_nested_cv_adaboost(X_train, Y_train, X_test, Y_test, Y_te
                             'LearnRate', learnRate);
 
                         Y_pred = predict(mdl, X_val);
-                        rmse_inner(j) = sqrt(mean((Y_val - Y_pred).^2));
+                        rmse_inner(j) = 1 - sum((Y_val - Y_pred).^2) / sum((Y_val - mean(Y_val)).^2);
                     end
                     mean_rmse = mean(rmse_inner);
 
@@ -147,7 +147,7 @@ function results = run_nested_cv_adaboost(X_train, Y_train, X_test, Y_test, Y_te
                         'VariableNames', {'NumCycles', 'LearnRate', 'MaxSplits', 'RMSE'});
                     hyperparamTable = [hyperparamTable; newrow];
 
-                    if mean_rmse < bestRMSE
+                    if mean_rmse > bestRMSE
                         bestRMSE = mean_rmse;
                         bestParams = struct('NumCycles', numCycles, ...
                                             'LearnRate', learnRate, ...

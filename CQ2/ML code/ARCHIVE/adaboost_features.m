@@ -48,16 +48,18 @@ X_test_norm = (X_test - mu) ./ sigma;
 
 % ---- 4. Set up hyperparameter grids ----
 
+% Nested CV for AdaBoost (LSBoost)
+% Inputs: X_train_norm, Y_train
+% Fixed grids and CV settings
 numLearners_grid = [20, 40, 80, 120];  % Number of boosting iterations
-learnRate_grid = [0.05, 0.1, 0.2, 0.4]; % Learning rate
-minLeaf_grid = [1, 3, 6, 10];           % Min leaf size for weak learners
-
+learnRate_grid   = [0.05, 0.1, 0.2, 0.4]; % Learning rate
+minLeaf_grid     = [1, 3, 6, 10];           % Min leaf size for weak learners
 outerK = 5;
 innerK = 3;
 outerCV = cvpartition(size(X_train_norm,1), 'KFold', outerK);
 
-all_outer_r2 = zeros(outerK,1);
-bestParamsList = cell(outerK,1);
+all_outer_r2    = zeros(outerK,1);
+bestParamsList  = cell(outerK,1);
 
 fprintf('\n==== Starting AdaBoost Nested Cross-Validation ====\n');
 for i = 1:outerK
@@ -69,40 +71,67 @@ for i = 1:outerK
     Xval_outer = X_train_norm(valIdx, :);
     Yval_outer = Y_train(valIdx);
 
-    best_r2 = -Inf;
+    % Inner CV for hyperparameter tuning
+    innerCV = cvpartition(size(Xtr_outer,1), 'KFold', innerK);
+    best_inner_r2 = -Inf;
+    best_param = struct('NumLearners',[], 'LearnRate',[], 'MinLeaf',[]);
 
     for nL = numLearners_grid
         for lr = learnRate_grid
-            for minLeaf = minLeaf_grid
-                % Train ensemble
-                t = templateTree('MinLeafSize', minLeaf);
-                model = fitrensemble(Xtr_outer, Ytr_outer, ...
-                    'Method', 'LSBoost', ...
-                    'NumLearningCycles', nL, ...
-                    'LearnRate', lr, ...
-                    'Learners', t);
+            for ml = minLeaf_grid
+                inner_r2s = zeros(innerK,1);
+                for j = 1:innerK
+                    trIdx = training(innerCV, j);
+                    teIdx = test(innerCV, j);
 
-                Ypred_val = predict(model, Xval_outer);
-                r2 = 1 - sum((Yval_outer - Ypred_val).^2) / sum((Yval_outer - mean(Yval_outer)).^2);
+                    Xtr_inner = Xtr_outer(trIdx, :);
+                    Ytr_inner = Ytr_outer(trIdx);
+                    Xval_inner = Xtr_outer(teIdx, :);
+                    Yval_inner = Ytr_outer(teIdx);
 
-                fprintf('  Learners=%d, LR=%.3f, MinLeaf=%d | R^2=%.4f\n', nL, lr, minLeaf, r2);
+                    t = templateTree('MinLeafSize', ml);
+                    mdl = fitrensemble(Xtr_inner, Ytr_inner, ...
+                        'Method','LSBoost', ...
+                        'NumLearningCycles', nL, ...
+                        'LearnRate', lr, ...
+                        'Learners', t);
 
-                if r2 > best_r2
-                    best_r2 = r2;
-                    best_param = struct('NumLearners', nL, 'LearnRate', lr, 'MinLeaf', minLeaf);
+                    Ypred_inner = predict(mdl, Xval_inner);
+                    inner_r2s(j) = 1 - sum((Yval_inner - Ypred_inner).^2) / sum((Yval_inner - mean(Yval_inner)).^2);
+                end
+                avg_r2 = mean(inner_r2s);
+                if avg_r2 > best_inner_r2
+                    best_inner_r2 = avg_r2;
+                    best_param.NumLearners = nL;
+                    best_param.LearnRate   = lr;
+                    best_param.MinLeaf     = ml;
                 end
             end
         end
     end
 
-    all_outer_r2(i) = best_r2;
+    % Train on full outer training with best hyperparams
+    t_final = templateTree('MinLeafSize', best_param.MinLeaf);
+    model_final = fitrensemble(Xtr_outer, Ytr_outer, ...
+        'Method','LSBoost', ...
+        'NumLearningCycles', best_param.NumLearners, ...
+        'LearnRate', best_param.LearnRate, ...
+        'Learners', t_final);
+
+    % Evaluate on outer validation
+    Ypred_outer = predict(model_final, Xval_outer);
+    outer_r2 = 1 - sum((Yval_outer - Ypred_outer).^2) / sum((Yval_outer - mean(Yval_outer)).^2);
+
+    all_outer_r2(i) = outer_r2;
     bestParamsList{i} = best_param;
+
     fprintf('>> Fold %d best: Learners=%d, LR=%.3f, MinLeaf=%d | Outer R^2=%.4f\n', ...
-        i, best_param.NumLearners, best_param.LearnRate, best_param.MinLeaf, best_r2);
+        i, best_param.NumLearners, best_param.LearnRate, best_param.MinLeaf, outer_r2);
 end
 
 fprintf('\n=== Nested CV complete! ===\n');
 fprintf('Outer fold R^2s: '); disp(all_outer_r2');
+
 
 %% Find the mode (most frequent) best parameters
 numLearners_cv = cellfun(@(s) s.NumLearners, bestParamsList);

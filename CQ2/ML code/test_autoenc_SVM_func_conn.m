@@ -121,23 +121,7 @@ fprintf('Test matrix shape: %d x %d\n', size(X_test, 1), size(X_test, 2));
 [X_train_norm, mu, sigma] = zscore(X_train);
 X_test_norm = (X_test - mu) ./ sigma;
 
-%% 2. PCA on standardized training set
-% [coeff, score_train, ~, ~, explained] = pca(X_train_norm);
-% 
-% cumExplained = cumsum(explained);
-% numPC = find(cumExplained >= 65, 1, 'first');
-% fprintf('Selected %d principal components for the inputted percentage of variance explained.\n', numPC);
-% 
-% X_train_pca = score_train(:, 1:numPC);
-% X_test_pca = (X_test_norm * coeff(:, 1:numPC));
 
-
-
-%% --- Autoencoder feature extraction ---
-
-% hiddenSize = 20;  % Adjustable hyperparameter
-% [X_train_ae, X_test_ae, autoenc] = autoencoder_features(X_train, X_test, hiddenSize);
-% 
 
 hiddenSizes = [10, 20, 30, 50];
 
@@ -232,22 +216,7 @@ end
 
 
 
-%% --- Function Definitions ---
 
-function [X_train_ae, X_test_ae, autoenc] = autoencoder_features(X_train, X_test, hiddenSize)
-    [X_train_norm, mu, sigma] = zscore(X_train);
-    X_test_norm = (X_test - mu) ./ sigma;
-    
-    autoenc = trainAutoencoder(X_train_norm', hiddenSize, ...
-        'MaxEpochs', 200, ...
-        'L2WeightRegularization', 0.001, ...
-        'SparsityRegularization', 1, ...
-        'SparsityProportion', 0.1, ...
-        'ScaleData', false);
-    
-    X_train_ae = encode(autoenc, X_train_norm')';
-    X_test_ae  = encode(autoenc, X_test_norm')';
-end
 
 %% 5. Nested CV SVM function
 function [mean_outer_r2, bestParams, all_outer_r2] = nested_cv_svm(X, Y, outerCV, innerK, kernelType, grid)
