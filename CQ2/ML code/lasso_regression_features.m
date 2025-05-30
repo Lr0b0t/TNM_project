@@ -1,9 +1,9 @@
 % LASSO regression with cross-validation for Lambda (Alpha = 1 = LASSO)
 
 clc; clear; close all;
-
+rng(42,'twister')
 % Load data as before
-baseDir = fullfile('..', 'final files');
+baseDir = fullfile('..','..', 'data cleanup and management', 'final files');
 trainFile = fullfile(baseDir, 'train_features_Q3_imputed.csv');
 testFile  = fullfile(baseDir, 'test_features_Q3_imputed.csv');
 
