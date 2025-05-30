@@ -28,8 +28,6 @@ clc; close all; clear;
 %
 % Notes:
 %   - This script does not perform any imputation.
-%   - For downstream analysis, we will apply MICE or mean estimation for
-%   the NaNs to both train and test sets.
 %   - The script reports the number and proportion of complete (NaN-free)
 %     rows in each split for quality control.
 %
@@ -61,7 +59,7 @@ if any(allMissing)
 end
 
 % Randomly split into train/test (e.g., 80/20)
-rng(42); % For reproducibility
+% rng(42); % For reproducibility
 nTotal = height(data);
 nTest = round(0.2 * nTotal);
 
@@ -84,7 +82,6 @@ fprintf('Test set:  %d rows, %d (%.1f%%) fully complete rows\n', ...
 trainFile = fullfile(baseDir, 'train_features_Q2.csv');
 testFile  = fullfile(baseDir, 'test_features_Q2.csv');
 
-% Save to disk
 writetable(trainSet, trainFile);
 writetable(testSet, testFile);
 

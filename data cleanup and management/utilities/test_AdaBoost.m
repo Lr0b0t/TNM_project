@@ -6,52 +6,71 @@ rng(42, 'twister');
 
 %% Step 0: Load Training and Test Data
 
-% Define base path to data files
-baseDir = fileparts(pwd);                     % e.g., if in /utilities/
-dataDir = fullfile(baseDir, 'final files');
-
-% Define file paths
-trainFile = fullfile(dataDir, 'train_features_Q2.csv');
-testFile  = fullfile(dataDir, 'test_features_Q2.csv');
-
-% Load training and test data tables
-trainTable = readtable(trainFile);
-testTable  = readtable(testFile);
-
-% Remove ID column (assumed to be the first column)
-trainTable(:,1) = [];
-testTable(:,1) = [];
-
-% Identify numeric columns (e.g., skip categorical if present)
-numericVarsTrain = varfun(@isnumeric, trainTable, 'OutputFormat', 'uniform');
-numericVarsTest  = varfun(@isnumeric, testTable,  'OutputFormat', 'uniform');
-
-% Extract numeric matrices for modeling
-numericDataTrain = trainTable{:, numericVarsTrain};
-numericDataTest  = testTable{:, numericVarsTest};  % No missing values assumed
-
-%% Step 1: Handle Missing Values in Training Set Only
-[trainFilled, meanVec] = impute_data_simple(numericDataTrain, 'mean');
-
-% No imputation needed for test set
-testFilled = numericDataTest;
-
-%% Step 2: Define Target Columns and Extract MMSE
-numTargets = 3;
-
-% Training set
-X_train = trainFilled(:, 1:end - numTargets);        % Features
-Y_all_train = trainFilled(:, end - numTargets + 1:end);
-Y_train = Y_all_train(:, 2);                         % MMSE (second-to-last)
-
-% Test set
-X_test = testFilled(:, 1:end - numTargets);          % Features only
-Y_all_test = testFilled(:, end - numTargets + 1:end);
-Y_test = Y_all_test(:, 2);                           % MMSE
+% % Define base path to data files
+% baseDir = fileparts(pwd);                     % e.g., if in /utilities/
+% dataDir = fullfile(baseDir, 'final files');
+% 
+% % Define file paths
+% trainFile = fullfile(dataDir, 'train_features_Q2_imputed.csv');
+% testFile  = fullfile(dataDir, 'test_features_Q2_imputed.csv');
+% 
+% % Load training and test data tables
+% trainTable = readtable(trainFile);
+% testTable  = readtable(testFile);
+% 
+% % Remove ID column (assumed to be the first column)
+% trainTable(:,1) = [];
+% testTable(:,1) = [];
+% 
+% % Identify numeric columns (e.g., skip categorical if present)
+% numericVarsTrain = varfun(@isnumeric, trainTable, 'OutputFormat', 'uniform');
+% numericVarsTest  = varfun(@isnumeric, testTable,  'OutputFormat', 'uniform');
+% 
+% % Extract numeric matrices for modeling
+% trainFilled = trainTable{:, numericVarsTrain};
+% testFilled  = testTable{:, numericVarsTest};  % No missing values assumed
+% 
+% 
+% %% Step 2: Define Target Columns and Extract MMSE
+% numTargets = 3;
+% 
+% % Training set
+% X_train = trainFilled(:, 1:end - numTargets);        % Features
+% Y_all_train = trainFilled(:, end - numTargets + 1:end);
+% Y_train = Y_all_train(:, 2);                         % MMSE (second-to-last)
+% 
+% % Test set
+% X_test = testFilled(:, 1:end - numTargets);          % Features only
+% Y_all_test = testFilled(:, end - numTargets + 1:end);
+% Y_test = Y_all_test(:, 2);                           % MMSE
 
 
-Y_test_baseline = testFilled(:, 3);
-Y_train_baseline = trainFilled(:, 3);
+
+baseDir = fullfile('..', 'final files');
+trainFile = fullfile(baseDir, 'train_features_Q2_imputed.csv');
+testFile  = fullfile(baseDir, 'test_features_Q2_imputed.csv');
+
+train_tbl = readtable(trainFile);
+test_tbl  = readtable(testFile);
+
+% ---- 2. Identify feature and target columns ----
+
+target_names = {'MMSCORE_followUp', 'CDSOB_followUp', 'GDTOTAL_followUp'};
+id_col = 1;
+target_col = find(strcmp(train_tbl.Properties.VariableNames, 'MMSCORE_followUp'));
+target_cols = find(ismember(train_tbl.Properties.VariableNames, target_names));
+
+feature_cols = setdiff(1:width(train_tbl), [id_col, target_cols]);
+feature_names = train_tbl.Properties.VariableNames(feature_cols);
+
+X_train = train_tbl{:, feature_cols};
+Y_train = train_tbl{:, target_col};
+X_test  = test_tbl{:, feature_cols};
+Y_test  = test_tbl{:, target_col};
+
+
+Y_test_baseline = X_test(:, 3);
+Y_train_baseline = X_train(:, 3);
 
 %% Step 3: Normalize Features (Z-score using training stats only)
 [X_train_norm, mu, sigma] = zscore(X_train);
@@ -237,62 +256,3 @@ end
 
 
 
-function [filledData, imputerInfo] = impute_data_simple(data, method, varargin)
-%IMPUTE_DATA_SIMPLE Imputes missing values in a numeric matrix using simple methods.
-%
-%   [filledData, imputerInfo] = impute_data_simple(data, method)
-%   [filledData, imputerInfo] = impute_data_simple(data, method, trainInfo)
-%
-%   Inputs:
-%       data        : Numeric matrix with missing values (NaNs).
-%       method      : String specifying the imputation method:
-%                       'mean' - fills each column's NaNs with its mean
-%                       'knn'  - uses KNN imputation (requires Bioinformatics Toolbox)
-%       trainInfo   : Optional. For 'mean' method, supply a vector of means
-%                     (used for imputing test data using training statistics).
-%
-%   Outputs:
-%       filledData  : Data matrix with NaNs imputed.
-%       imputerInfo : For 'mean' method, this is a vector of column means used.
-%                     For 'knn', this is empty ([]).
-%
-%   Example:
-%       [trainImputed, meanVec] = impute_data_simple(trainData, 'mean');
-%       testImputed = impute_data_simple(testData, 'mean', meanVec);
-
-    % Check inputs
-    if nargin > 2
-        info = varargin{1};  % Precomputed mean (for test set)
-    else
-        info = [];
-    end
-
-    switch lower(method)
-        case 'mean'
-            if isempty(info)
-                % Compute column-wise mean excluding NaNs
-                colMeans = mean(data, 'omitnan');
-            else
-                colMeans = info;  % Use supplied means (e.g., from training data)
-            end
-
-            filledData = data;
-            for j = 1:size(filledData,2)
-                nanIdx = isnan(filledData(:,j));
-                filledData(nanIdx,j) = colMeans(j);
-            end
-            imputerInfo = colMeans;
-
-        case 'knn'
-            % KNN imputation using Bioinformatics Toolbox
-            try
-                filledData = knnimpute(data')';  % knnimpute works on features in rows
-            catch ME
-                error('KNN imputation requires the Bioinformatics Toolbox.\nError: %s', ME.message);
-            end
-            imputerInfo = [];  % No extra info needed for KNN reuse
-
-        otherwise
-            error('Unsupported method: %s. Use ''mean'' or ''knn''.', method);
-    end
-end
