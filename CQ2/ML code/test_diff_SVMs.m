@@ -4,56 +4,34 @@ close all; clear;
  rng(42, 'twister');
 % TODO: write about ε, test teh jumping groups function
 
-%% Step 0: Load Training and Test Data
 
-% Define base path to data files
-baseDir = fileparts(pwd);                     % e.g., if in /utilities/
-dataDir = fullfile(baseDir, 'final files');
+% ---- 1. Load Data ----
 
-% Define file paths
 baseDir = fullfile('..','..', 'data cleanup and management', 'final files');
 trainFile = fullfile(baseDir, 'train_features_Q2_imputed.csv');
 testFile  = fullfile(baseDir, 'test_features_Q2_imputed.csv');
 
+train_tbl = readtable(trainFile);
+test_tbl  = readtable(testFile);
 
-% Load training and test data tables
-trainTable = readtable(trainFile);
-testTable  = readtable(testFile);
+% ---- 2. Identify feature and target columns ----
 
-% Remove ID column (assumed to be the first column)
-trainTable(:,1) = [];
-testTable(:,1) = [];
+target_names = {'MMSCORE_followUp', 'CDSOB_followUp', 'GDTOTAL_followUp'};
 
-% Identify numeric columns (e.g., skip categorical if present)
-numericVarsTrain = varfun(@isnumeric, trainTable, 'OutputFormat', 'uniform');
-numericVarsTest  = varfun(@isnumeric, testTable,  'OutputFormat', 'uniform');
+% Find indices
+target_cols = find(ismember(train_tbl.Properties.VariableNames, target_names));
+id_col = 1; % first column is ID
 
-% Extract numeric matrices for modeling
-numericDataTrain = trainTable{:, numericVarsTrain};
-numericDataTest  = testTable{:, numericVarsTest};  % No missing values assumed
+% Only use as features those columns not in targets or ID
+feature_cols = setdiff(1:width(train_tbl), [id_col, target_cols]);
 
-%% Step 1: Handle Missing Values in Training Set Only
-[trainFilled, meanVec] = impute_data_simple(numericDataTrain, 'mean');
+X_train = train_tbl{:, feature_cols};
+Y_train = train_tbl{:, strcmp(train_tbl.Properties.VariableNames, 'MMSCORE_followUp')};
+X_test  = test_tbl{:, feature_cols};
+Y_test  = test_tbl{:, strcmp(test_tbl.Properties.VariableNames, 'MMSCORE_followUp')};
 
-% No imputation needed for test set
-testFilled = numericDataTest;
-
-%% Step 2: Define Target Columns and Extract MMSE
-numTargets = 3;
-
-% Training set
-X_train = trainFilled(:, 1:end - numTargets);        % Features
-Y_all_train = trainFilled(:, end - numTargets + 1:end);
-Y_train = Y_all_train(:, 2);                         % MMSE (second-to-last)
-
-% Test set
-X_test = testFilled(:, 1:end - numTargets);          % Features only
-Y_all_test = testFilled(:, end - numTargets + 1:end);
-Y_test = Y_all_test(:, 2);                           % MMSE
-
-
-Y_test_baseline = testFilled(:, 3);
-Y_train_baseline = trainFilled(:, 3);
+Y_test_baseline = X_train(:, 3);
+Y_train_baseline = X_test(:, 3);
 
 %% Step 3: Normalize Features (Z-score using training stats only)
 [X_train_norm, mu, sigma] = zscore(X_train);
@@ -306,37 +284,6 @@ function [mean_rmse, mean_r2] = svm_inner_cv_r2(X, Y, cv, kernel, C, sigma, poly
     mean_rmse = mean(rmse_inner);
     mean_r2 = mean(r2_inner);
 end
-
-
-% Helper for inner CV
-function mean_rmse = svm_inner_cv(X, Y, cv, kernel, C, sigma, polyorder, eps)
-    k = cv.NumTestSets;
-    rmse_inner = zeros(k, 1);
-    for j = 1:k
-        trainIdx = training(cv, j);
-        valIdx = test(cv, j);
-        X_in = X(trainIdx, :);
-        Y_in = Y(trainIdx);
-        X_val = X(valIdx, :);
-        Y_val = Y(valIdx);
-
-        switch kernel
-            case 'rbf'
-                model = fitrsvm(X_in, Y_in, 'KernelFunction', 'rbf', ...
-                    'BoxConstraint', C, 'KernelScale', sigma, 'Epsilon', eps, 'Standardize', false);
-            case 'linear'
-                model = fitrsvm(X_in, Y_in, 'KernelFunction', 'linear', ...
-                    'BoxConstraint', C, 'Epsilon', eps, 'Standardize', false);
-            case 'polynomial'
-                model = fitrsvm(X_in, Y_in, 'KernelFunction', 'polynomial', ...
-                    'PolynomialOrder', polyorder, 'BoxConstraint', C, 'Epsilon', eps, 'Standardize', false);
-        end
-        Y_pred = predict(model, X_val);
-        rmse_inner(j) = sqrt(mean((Y_val - Y_pred).^2));
-    end
-    mean_rmse = mean(rmse_inner);
-end
-
 
 
 
