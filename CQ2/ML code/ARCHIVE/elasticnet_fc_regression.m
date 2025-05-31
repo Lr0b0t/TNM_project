@@ -27,28 +27,15 @@ baseDir = pwd;
 % Path to features CSVs (relative to here)
 featuresDir = fullfile('..','..', 'data cleanup and management', 'final files');
 trainFile = fullfile(featuresDir, 'train_features_Q2_imputed.csv');
-testFile  = fullfile(featuresDir, 'test_features_Q2_imputed.csv');
 
-% Path to connectivity
-connDir = fullfile(baseDir, 'connectivity_n88');
-if ~exist(connDir, 'dir')
-    connDir = fullfile(baseDir, '..','..', 'connectivity_n88');
-end
-if ~exist(connDir, 'dir')
-    error('Could not find connectivity_n88 folder.');
-end
-
-%% ---- LOAD DATA ----
 trainData = readtable(trainFile);
-testData  = readtable(testFile);
+
 
 id_col = 1;
 mmse_col = find(strcmp(trainData.Properties.VariableNames, 'MMSCORE_followUp'));
 train_ids = trainData{:, id_col};
 test_ids  = testData{:, id_col};
 Y_train = trainData{:, mmse_col};
-Y_test  = testData{:, mmse_col};
-pad_id = @(id) sprintf('%07d', id);
 
 fprintf('\nLoading TRAIN FC matrices...\n');
 fc_train = load_fc_matrices(train_ids, connDir, pad_id);

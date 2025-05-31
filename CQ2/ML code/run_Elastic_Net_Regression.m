@@ -1,10 +1,12 @@
-function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train, Y_train)
+function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train, Y_train, outerK, innerK)
     % run_Elastic_Net_Regression performs nested cross-validation for Elastic Net regression.
     %
     %
     % Inputs:
     %   X_train - predictor matrix (n_samples x n_features)
     %   Y_train - response vector (n_samples x 1)
+    %   outerK       - (optional) number of outer CV folds (default = 5)
+    %   innerK       - (optional) number of inner CV folds (default = 3)
     %
     % Outputs:
     %   all_outer_r2       - R^2 scores for each outer fold (outerK x 1)
@@ -19,8 +21,12 @@ function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha
     lambdas = logspace(-4, 1, 8);
     
     % Nested Cross-validation setup
-    outerK = 5;
-    innerK = 3;
+    if nargin < 4 || isempty(innerK)
+        innerK = 3;
+    end
+    if nargin < 3 || isempty(outerK)
+        outerK = 5;
+    end
     outerCV = cvpartition(size(X_train,1), 'KFold', outerK);
     
     % Initialize storage

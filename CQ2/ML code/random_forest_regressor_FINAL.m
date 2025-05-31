@@ -49,20 +49,21 @@ X_test_norm = (X_test - mu) ./ sigma;
 
 %%
 outerK = 5; innerK = 5;
-% [all_outer_r2_rf, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regressor(X_train_norm, Y_train);
-
-results = run_nested_cv_SVM(X_train, Y_train, 'rbf',outerK, innerK);
-results2 = run_nested_cv_SVM(X_train, Y_train, 'polynomial',outerK, innerK);
-results2 = run_nested_cv_SVM(X_train, Y_train, 'linear',outerK, innerK);
+ [all_outer_r2_rf, mean_outer_r2, std_outer_r2, bestParamsList, ...
+ bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
+% [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = ...
+%          run_Random_Forest_Regressor_Extended(X_train_norm, Y_train, outerK, innerK)% results = run_nested_cv_SVM(X_train, Y_train, 'rbf',outerK, innerK);
+% results2 = run_nested_cv_SVM(X_train, Y_train, 'polynomial',outerK, innerK);
+% results2 = run_nested_cv_SVM(X_train, Y_train, 'linear',outerK, innerK);
 
 
 %% Retrain on all training data with best params
 finalModel = fitrensemble(X_train_norm, Y_train, ...
     'Method', 'Bag', ...
-    'NumLearningCycles', bestNumTrees, ...
+    'NumLearningCycles', bestParamsMode.NumTrees, ...
     'Learners', templateTree(...
-        'MinLeafSize', bestMinLeaf, ...
-        'MaxNumSplits', bestMaxSplit));
+        'MinLeafSize', bestParamsMode.MinLeaf, ...
+        'MaxNumSplits', bestParamsMode.MaxNumSplits));
 
 
 

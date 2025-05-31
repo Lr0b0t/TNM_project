@@ -1,12 +1,14 @@
-function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regressor(X_train_norm, Y_train)
+function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
     % nestedRF_CV performs nested cross-validation for Random Forest regression.
     % 
     % Syntax:
-    %   [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = nestedRF_CV(X_train_norm, Y_train)
+    %   [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
     % 
     % Inputs:
     %   X_train_norm - normalized predictor matrix (n_samples x n_features)
     %   Y_train      - response vector (n_samples x 1)
+    %   outerK       - (optional) number of outer CV folds (default = 5)
+    %   innerK       - (optional) number of inner CV folds (default = 3)
     % 
     % Outputs:
     %   all_outer_r2   - R^2 scores for each outer fold (outerK x 1)
@@ -19,8 +21,13 @@ function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsM
     minLeaf_grid = [1, 3, 5, 8, 12];         % Minimum leaf size
     maxNumSplits_grid = [10, 50, 100, 200];  % Maximum number of splits
     
-    outerK = 5;
-    innerK = 3;
+     %  Handle optional arguments
+    if nargin < 4 || isempty(innerK)
+        innerK = 3;
+    end
+    if nargin < 3 || isempty(outerK)
+        outerK = 5;
+    end
     outerCV = cvpartition(size(X_train_norm,1), 'KFold', outerK);
     
     all_outer_r2 = zeros(outerK,1);
