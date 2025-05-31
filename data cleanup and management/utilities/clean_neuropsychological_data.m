@@ -1,4 +1,4 @@
-clc; close all; clear;
+clear; close all; %clc; 
 
 % folder paths
 baseFolder = fileparts(pwd);  % We are at the 'utilities' folder, go one level up

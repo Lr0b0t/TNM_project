@@ -1,4 +1,4 @@
-clc; close all; clear;
+close all; clear; %clc; 
 
 %--------------------------------------------------------------------------
 %
@@ -59,7 +59,7 @@ if any(allMissing)
 end
 
 % Randomly split into train/test (e.g., 80/20)
-% rng(42); % For reproducibility
+rng(2, 'twister'); % For reproducibility
 nTotal = height(data);
 nTest = round(0.2 * nTotal);
 
@@ -87,3 +87,4 @@ writetable(testSet, testFile);
 
 fprintf('Train set saved to %s (%d rows)\n', trainFile, height(trainSet));
 fprintf('Test set saved to %s (%d rows)\n', testFile, height(testSet));
+

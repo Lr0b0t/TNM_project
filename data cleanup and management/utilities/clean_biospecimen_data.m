@@ -1,4 +1,4 @@
-clc; close all; clear;
+clear; close all; %clc; 
 
 % folder paths
 baseFolder = fileparts(pwd);  % assuming script is in 'utilities'
