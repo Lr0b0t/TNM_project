@@ -17,11 +17,20 @@ clc; close all; clear;
 %   - All files should be placed according to the described structure.
 %   - Rows with VISCODE 'tau' or 'tau2' are ignored.
 %   - Output: Number of eligible subjects and their IDs.
+%   - Requires that the file
+%     'basic_imaging_information_for_every_subject.csv' is already manually
+%     placed inside this folder, as it has to be downoladed from the
+%     database. This file was the list given by the database's website, and
+%     has the relevant data that accompany the imaging data that we
+%     downloaded.
 %
 % Directory Assumptions:
 %   - Script is inside "find eligible ids" folder.
 %   - Neuropsychological CSVs are in ../study data as downloaded/Neuropsychological/
 %
+% Output:
+%   - Save the list of our study IDs to a CSV file (no headers) in the utilities
+%    folder under the name 'unique_patient_ids.csv'
 % -------------------------------------------------------------------------
 
 % Define folders
