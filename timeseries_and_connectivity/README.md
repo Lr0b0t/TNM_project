@@ -31,7 +31,7 @@ Your working directory should be organized as follows:
 ├── 000XXXX/
 │   └── ...
 └── ...
-
+```
 
 ### Folder Descriptions
 
