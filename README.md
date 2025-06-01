@@ -1,4 +1,4 @@
-
+## Battlefields of the Mind: rDCM rs-fMRI Insights into TBI and PTSD in Vietnam War Veterans
 
 This repository contains a modular neuroimaging analysis pipeline, structured into separate stages corresponding to distinct clinical questions and tasks. The code supports analysis of resting-state fMRI (rsfMRI) data and machine learning-based outcome prediction across several neurological and psychiatric conditions.
 
