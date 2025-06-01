@@ -115,10 +115,9 @@ fprintf('\nRandom Forest Nested CV Results:\n');
 fprintf('Per-fold R2 scores: [ %s ]\n', sprintf('%.4f ', all_outer_r2_rf));
 fprintf('Mean R2 = %.4f, Std R2 = %.4f\n', mean_outer_r2_rf, std_outer_r2_rf);
 fprintf('Best hyperparameters:\n');
-fprintf('NumTrees = %d\n', bestParamsList_rf.NumTrees);
-fprintf('MinLeafSize = %d\n', bestParamsList_rf.MinLeaf);
-fprintf('MaxNumSplits = %d\n\n', bestParamsList_rf.MaxNumSplits);
-
+fprintf('NumTrees = %d\n', bestParamsMode_rf.NumTrees);
+fprintf('MinLeafSize = %d\n', bestParamsMode_rf.MinLeaf);
+fprintf('MaxNumSplits = %d\n\n', bestParamsMode_rf.MaxNumSplits);
 %%  Run Elastic Net regression
 fprintf(' ========== Elastic Net Regression (nested CV: outerK=%d, innerK=%d)==========\n', outerK, innerK);
 
@@ -149,10 +148,10 @@ fprintf('Per-fold MAE: [ %s ]\n', sprintf('%.4f ', results_rbf.outerMAE));
 fprintf('Mean R2 = %.4f\n', results_rbf.meanR2);
 fprintf('Mean RMSE = %.4f\n', results_rbf.meanRMSE);
 fprintf('Mean MAE = %.4f\n', results_rbf.meanMAE);
-fprintf('Best hyperparameters:\n');
-fprintf('C = %.4g\n', results_rbf.bestParamsList.C);
-fprintf('Epsilon = %.3f\n', results_rbf.bestParamsList.epsilon);
-fprintf('Sigma = %.4g\n\n', results_rbf.bestParamsList.sigma);
+fprintf('Hyperparameters (mode):\n');
+fprintf('C = %.4g\n', results_rbf.bestParamsMode.C);
+fprintf('Epsilon = %.3f\n', results_rbf.bestParamsMode.epsilon);
+fprintf('Sigma = %.4g\n\n', results_rbf.bestParamsMode.sigma);
 
 %%  Run SVM with Polynomial kernel
 fprintf(' ========== SVM Regression (Polynomial kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
@@ -167,10 +166,10 @@ fprintf('Per-fold MAE: [ %s ]\n', sprintf('%.4f ', results_poly.outerMAE));
 fprintf('Mean R2 = %.4f\n', results_poly.meanR2);
 fprintf('Mean RMSE = %.4f\n', results_poly.meanRMSE);
 fprintf('Mean MAE = %.4f\n', results_poly.meanMAE);
-fprintf('Best hyperparameters:\n');
-fprintf('C = %.4g\n', results_poly.bestParamsList.C);
-fprintf('Epsilon = %.3f\n', results_poly.bestParamsList.epsilon);
-fprintf('PolyOrder = %d\n\n', results_poly.bestParamsList.PolyOrder);
+fprintf('Hyperparameters (mode):\n');
+fprintf('C = %.4g\n', results_poly.bestParamsMode.C);
+fprintf('Epsilon = %.3f\n', results_poly.bestParamsMode.epsilon);
+fprintf('PolyOrder = %d\n\n', results_poly.bestParamsMode.PolyOrder);
 
 %% Run SVM with Linear kernel
 fprintf('========== SVM Regression (Linear kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
@@ -185,9 +184,9 @@ fprintf('Per-fold MAE: [ %s ]\n', sprintf('%.4f ', results_lin.outerMAE));
 fprintf('Mean R2 = %.4f\n', results_lin.meanR2);
 fprintf('Mean RMSE = %.4f\n', results_lin.meanRMSE);
 fprintf('Mean MAE = %.4f\n', results_lin.meanMAE);
-fprintf('Best hyperparameters:\n');
-fprintf('C = %.4g\n', results_lin.bestParamsList.C);
-fprintf('Epsilon = %.3f\n\n', results_lin.bestParamsList.epsilon);
+fprintf('Hyperparameters (mode):\n');
+fprintf('C = %.4g\n', results_lin.bestParamsMode.C);
+fprintf('Epsilon = %.3f\n\n', results_lin.bestParamsMode.epsilon);
 
 %% 
 fprintf('All models runs completed.\n');

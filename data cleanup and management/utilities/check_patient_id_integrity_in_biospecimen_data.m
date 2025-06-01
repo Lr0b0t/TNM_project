@@ -14,9 +14,6 @@ clear; close all; %clc;
 %   - The script only processes files in the biospecimen useful data folder
 %   - All data files must contain a 'SCRNO' column
 %
-% Usage:
-%   To be run from the 'utilities' folder.
-% 
 % Comments on the printed outcomes:
 % Based on the outcome we get when we run this script, it is clear that 
 % more than half of the IDs (all=88) are missing in three of the four

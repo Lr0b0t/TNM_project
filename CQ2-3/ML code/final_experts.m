@@ -1,8 +1,54 @@
 clc; clear; close all;
 rng(6, 'twister');
+%--------------------------------------------------------------------------
+%
+% Purpose:
+%   This script implements the *final prediction step* for cognitive decline,
+%   using the "mixture of experts" framework as described in this project.
+%   After evaluating multiple machine learning models (elastic net, random forest,
+%   SVM) on different feature domains (clinical/psychometric, functional connectivity,
+%   effective connectivity), Elastic Net regression on the clinical data
+%   was selected as the most robust expert for all three target scores.
+%
+%   This script thus applies *Elastic Net regression as a single expert* to generate
+%   final predictions for the three outcome measures at 12-month follow-up:
+%      - MMSCORE_followUp 
+%      - CDSOB_followUp   
+%      - GDTOTAL_followUp 
+%
+% Key Workflow:
+%   1. Utility functions are provided for result interpretation, plotting, and 
+%      bootstrapped confidence intervals.
+%   2. For each outcome score, the script:
+%        - Loads preprocessed training and test data.
+%        - Selects feature columns (removing outcome variables and IDs).
+%        - Applies previously determined best Elastic Net hyperparameters
+%          (alpha, lambda; found via nested cross-validation on the training set).
+%        - Retrains the model on all training data and predicts on the *held-out* test set.
+%        - Reports RMSE, MAE, R^2, and compares to a null/baseline model.
+%        - Visualizes results and reports bootstrapped CIs for test metrics.
+%
+% Rationale:
+%   Although a formal mixture (ensemble) of experts was considered, Elastic Net
+%   proved the best single model ("expert") for these prediction tasks. This script
+%   demonstrates a careful, robust final evaluation of that model, with a clear
+%   separation between the training/validation and final test sets (to avoid data leakage).
+%
+%
+% Input Files:
+%   - train_features_Q2_imputed.csv   % [nTrain x nFeatures] table
+%   - test_features_Q2_imputed.csv    % [nTest  x nFeatures] table
+%
+%
+% Output:
+%   - Console summary of test set performance for each outcome
+%   - Plots of predicted vs. actual test set values
+%   - List of selected nonzero features and their elastic net coefficients
+%   - Bootstrapped 95% confidence intervals for test RMSE, MAE, and R^2
+%
+%--------------------------------------------------------------------------
 
 % the target are officially named as 'MMSCORE_followUp', 'CDSOB_followUp', 'GDTOTAL_followUp'
-
 
 function interpret_elastic_net(feature_names, coefs, target_score)
 

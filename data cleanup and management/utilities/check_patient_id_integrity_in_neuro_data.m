@@ -20,8 +20,6 @@ clear; close all; %clc;
 %     excluding any files inside the 'archived_cleaned_files' folder
 %   - All files must contain a 'SCRNO' column
 %
-% Usage:
-%   Run from within the 'utilities' folder
 % -------------------------------------------------------------------------
 
 % Define paths

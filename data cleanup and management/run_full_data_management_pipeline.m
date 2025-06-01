@@ -54,8 +54,5 @@ run(fullfile(fullfile(pwd, 'utilities'), 'mean_impute_train_test.m'));
 fprintf('\n Splitting into train/test sets for Q3...\n');
 run(fullfile(fullfile(pwd, 'utilities'), 'build_train_test_sets_Q3.m'));
 
-fprintf('\n Building class labels...\n');
-run(fullfile(fullfile(pwd, 'utilities'), 'build_classes.m'));
-
-
+%
 fprintf('\n--- Data preparation pipeline completed! :D ---\n');

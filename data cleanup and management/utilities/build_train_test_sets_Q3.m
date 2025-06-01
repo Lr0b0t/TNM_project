@@ -32,9 +32,6 @@ clear; close all; %clc;
 %   - 'train_features_Q3_imputed.csv' and 'test_features_Q3_imputed.csv'
 %     with APGEN1 and APGEN2 columns appended and no missing APOE data.
 %
-% Usage:
-%   - Run this script in the 'utilities' directory.
-%
 % -------------------------------------------------------------------------
 
 % --- Paths ---
