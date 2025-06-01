@@ -1,1 +1,0 @@
-remove connectivity files! make sure the dim reduced files are in the correct place!!!!!!!
