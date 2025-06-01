@@ -12,23 +12,24 @@ The `FunImgARCFW_n88` folder with preprocessed rsfMRI data can be downloaded fro
 ## Directory Structure
 
 Your working directory should be organized as follows:
-
+```text
 ../data/
 ├── FunImgARCFW_n88/
-│ ├── 0006315/
-│ │ └── wFiltered_4DVolume.nii
-│ ├── 000XXXX/
-│ │ └── wFiltered_4DVolume.nii
-│ └── ...
+│   ├── 0006315/
+│   │   └── wFiltered_4DVolume.nii
+│   ├── 000XXXX/
+│   │   └── wFiltered_4DVolume.nii
+│   └── ...
 ├── BN_Atlas_246_3mm.nii
 ├── BNA_matrix_binary_246x246.csv
-connectivity_n88/
+
+../connectivity_n88/
 ├── 0006315/
-│ ├── time_series.mat
-│ ├── func_connectivity.mat
-│ └── rdcm_connectivity.mat
+│   ├── time_series.mat
+│   ├── func_connectivity.mat
+│   └── rdcm_connectivity.mat
 ├── 000XXXX/
-│ └── ...
+│   └── ...
 └── ...
 
 
@@ -72,7 +73,7 @@ Uses the atlas to extract average BOLD signals from 246 regions.
 
 Saves time_series.mat in each subject’s output folder.
 
-2. Compute Functional Connectivity
+### 2. Compute Functional Connectivity
 Call the function:
 compute_func_connectivity_for_all_subjects("../data/connectivity_n88")
 This function computes:
@@ -84,7 +85,7 @@ fc_z: Fisher Z-transformed matrix
 cov_mat: Covariance matrix
 Results saved in func_connectivity.mat.
 
-3. Estimate rDCM Models
+### 3. Estimate rDCM Models
 Call the function:
 estimate_rdcm_for_all_subjects(
     "../data/connectivity_n88", 
