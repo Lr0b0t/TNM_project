@@ -37,13 +37,6 @@ A separate `README.md` file within the Polybox directory provides descriptions o
 
 ## Getting Started
 
-Each folder contains its own `README.md` file with instructions specific to that analysis stage, including:
+Each folder contains its own `README.md` file with instructions specific to that analysis stage
 
-* Environment setup
-* Dependencies
-* Data formats
-* Run instructions
-* Output description
 
-We recommend starting with the `timeseries_and_connectivity` folder before proceeding to `CQ1` and then to `CQ2_3`.
- 
