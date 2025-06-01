@@ -1,7 +1,34 @@
-clc; clear; close all
+%% =========================================================================
+% Purpose:
+%   This script evaluates the predictive utility of generative latent features
+%   (from a VAE trained on rDCM effective connectivity) for clinical outcomes
+%   at one-year follow-up. 
+%   It applies Random Forest, Elastic Net, and SVM regressors with nested 
+%   cross-validation to the selected target outcome, enabling direct 
+%   comparison of model performance.
+%
+% Workflow and Data:
+%   - Latent representations (mu_latent) are loaded from RDCM_dim10.mat.
+%   - Patient IDs are matched to outcome scores from the imputed training set.
+%   - Regression targets can be 'CDSOB_followUp', 'GDTOTAL_followUp', or 'MMSCORE_followUp';
+%     set the target at the top.
+%   - Only training data are used to prevent information leakage; test data are
+%     reserved for final model evaluation.
+%
+% =========================================================================
 
+
+
+clc; clear; close all
 rng(6, "twister")
-%    We go two levels up to reach the “latent_results/vae_results” directory, where FC_dim10.mat
+
+% IMPORTANT:
+% The three target scores are 'CDSOB_followUp', 'GDTOTAL_followUp',
+% 'MMSCORE_followUp'. Select one for running this script. You can set it below
+
+targetScore = 'GDTOTAL_followUp'; % or'GDTOTAL_followUp' or 'MMSCORE_followUp'
+
+%    We go two levels up to reach the “latent_results/vae_results” directory, where RDCM_dim10.mat
 %    resides. That MAT-file must contain a structure fcData.vae_data.mu_latent,
 %    which is an [n_latent_ids × latent_dim] matrix of embeddings.
 
@@ -61,7 +88,6 @@ mu_latent_withIds = [uniqueIDs mu_latent]; % the order that the letents are stor
 mu_latent_withIds = mu_latent_withIds(ismember(mu_latent_withIds(:,1), trainIDs), :);
 
 % keep only the col with the score for Y_train
-targetScore = 'CDSOB_followUp'; %'CDSOB_followUp'; %'GDTOTAL_followUp'; % MMSCORE_followUp
 scoreIdx = strcmp(trainData.Properties.VariableNames, targetScore);
 
 Y_train_withID = trainData{:, [1, find(scoreIdx)]};

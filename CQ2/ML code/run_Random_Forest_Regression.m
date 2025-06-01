@@ -1,11 +1,9 @@
-function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
+function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regression(X_train, Y_train, outerK, innerK)
     % nestedRF_CV performs nested cross-validation for Random Forest regression.
     % 
-    % Syntax:
-    %   [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
     % 
     % Inputs:
-    %   X_train_norm - normalized predictor matrix (n_samples x n_features)
+    %   X_train      - train matrix (n_samples x n_features)
     %   Y_train      - response vector (n_samples x 1)
     %   outerK       - (optional) number of outer CV folds (default = 5)
     %   innerK       - (optional) number of inner CV folds (default = 3)
@@ -21,26 +19,26 @@ function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsM
     minLeaf_grid = [1, 3, 5, 8, 12];         % Minimum leaf size
     maxNumSplits_grid = [10, 50, 100, 200];  % Maximum number of splits
     
-     %  Handle optional arguments
+     % optional arguments
     if nargin < 4 || isempty(innerK)
         innerK = 3;
     end
     if nargin < 3 || isempty(outerK)
         outerK = 5;
     end
-    outerCV = cvpartition(size(X_train_norm,1), 'KFold', outerK);
+    outerCV = cvpartition(size(X_train,1), 'KFold', outerK);
     
     all_outer_r2 = zeros(outerK,1);
     bestParamsList = cell(outerK,1);
     
     fprintf('\n==== Starting Random Forest Nested Cross-Validation ====\n');
     for i = 1:outerK
-        fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
+        %fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
         trainIdx = training(outerCV, i);
         valIdx   = test(outerCV, i);
-        Xtr_outer = X_train_norm(trainIdx, :);
+        Xtr_outer = X_train(trainIdx, :);
         Ytr_outer = Y_train(trainIdx);
-        Xval_outer = X_train_norm(valIdx, :);
+        Xval_outer = X_train(valIdx, :);
         Yval_outer = Y_train(valIdx);
     
         % --- Nested: Inner CV for hyperparameter selection ---
@@ -110,16 +108,16 @@ function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsM
         all_outer_r2(i) = outer_r2;
         bestParamsList{i} = best_inner_param;
     
-        fprintf('>> Fold %d best params: Trees=%d, MinLeaf=%d, MaxSplit=%d | Outer R^2=%.4f\n', ...
-            i, best_inner_param.NumTrees, best_inner_param.MinLeaf, best_inner_param.MaxNumSplits, outer_r2);
+        %fprintf('>> Fold %d best params: Trees=%d, MinLeaf=%d, MaxSplit=%d | Outer R^2=%.4f\n', ...
+        %    i, best_inner_param.NumTrees, best_inner_param.MinLeaf, best_inner_param.MaxNumSplits, outer_r2);
     end
     mean_outer_r2 = mean(all_outer_r2);
     std_outer_r2 = std(all_outer_r2);
-    fprintf('\n==== Nested CV finished ====\n');
-    fprintf('Outer fold R^2 scores: '); disp(all_outer_r2');
-    fprintf('Mean Outer R^2: %.4f | Std: %.4f\n', mean_outer_r2, std(all_outer_r2));
+    %fprintf('\n==== Nested CV finished ====\n');
+    %fprintf('Outer fold R^2 scores: '); disp(all_outer_r2');
+    %fprintf('Mean Outer R^2: %.4f | Std: %.4f\n', mean_outer_r2, std(all_outer_r2));
     
-    %% Find the mode (most frequent) best parameters
+    % Find the mode best parameters
     numTrees_cv = cellfun(@(s) s.NumTrees, bestParamsList);
     minLeaf_cv = cellfun(@(s) s.MinLeaf, bestParamsList);
     maxSplit_cv = cellfun(@(s) s.MaxNumSplits, bestParamsList);
@@ -135,6 +133,5 @@ function [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsM
     );
     
     fprintf('\nBest parameters (mode): Trees=%d, MinLeaf=%d, MaxSplit=%d\n', bestNumTrees, bestMinLeaf, bestMaxSplit);
-
 
 end

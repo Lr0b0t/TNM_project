@@ -1,3 +1,11 @@
+% -------------------------------------------------------------------------
+% [mean_rmse, mean_r2] = svm_inner_cv(X, Y, cv, kernel, C, sigma, polyorder, eps)
+%
+% Performs inner cross-validation for SVM regression hyperparameter tuning.
+% Supports all, RBF, linear, and polynomial kernels. Returns the mean RMSE and R^2
+% across all inner folds. No standardization is performed (assumed done outside).
+% -------------------------------------------------------------------------
+
 function [mean_rmse, mean_r2] = svm_inner_cv(X, Y, cv, kernel, C, sigma, polyorder, eps)
     k = cv.NumTestSets;
     rmse_inner = zeros(k, 1);

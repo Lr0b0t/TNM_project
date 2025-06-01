@@ -3,7 +3,7 @@ function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha
     %
     %
     % Inputs:
-    %   X_train - predictor matrix (n_samples x n_features)
+    %   X_train - train matrix (n_samples x n_features)
     %   Y_train - response vector (n_samples x 1)
     %   outerK       - (optional) number of outer CV folds (default = 5)
     %   innerK       - (optional) number of inner CV folds (default = 3)
@@ -38,7 +38,7 @@ function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha
     fprintf('\n===== NESTED CROSS-VALIDATION =====\n');
     
     for i = 1:outerK
-        fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
+        %fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
         % Split outer fold
         trainIdx = training(outerCV, i);
         valIdx   = test(outerCV, i);
@@ -112,14 +112,14 @@ function [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha
         all_outer_mae(i)  = mae;
         bestParamsList{i} = struct('Alpha', best_inner_alpha, 'Lambda', best_inner_lambda);
     
-        fprintf('>> Fold %d: Outer R^2=%.4f, RMSE=%.4f, MAE=%.4f\n', i, r2, rmse, mae);
+        %fprintf('>> Fold %d: Outer R^2=%.4f, RMSE=%.4f, MAE=%.4f\n', i, r2, rmse, mae);
     end
     
     % Summary 
-    fprintf('\n===== NESTED CV PERFORMANCE =====\n');
-    fprintf('Mean Outer R^2: %.4f (std %.4f)\n', mean(all_outer_r2), std(all_outer_r2));
-    fprintf('Mean Outer RMSE: %.4f (std %.4f)\n', mean(all_outer_rmse), std(all_outer_rmse));
-    fprintf('Mean Outer MAE: %.4f (std %.4f)\n', mean(all_outer_mae), std(all_outer_mae));
+    %fprintf('\n===== NESTED CV PERFORMANCE =====\n');
+    %fprintf('Mean Outer R^2: %.4f (std %.4f)\n', mean(all_outer_r2), std(all_outer_r2));
+    %fprintf('Mean Outer RMSE: %.4f (std %.4f)\n', mean(all_outer_rmse), std(all_outer_rmse));
+    %fprintf('Mean Outer MAE: %.4f (std %.4f)\n', mean(all_outer_mae), std(all_outer_mae));
     
     % Final best parameters 
     alphas_cv  = cellfun(@(s) s.Alpha, bestParamsList);

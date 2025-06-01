@@ -7,7 +7,7 @@
 %   - Nested CV (R^2 selection, NO leakage). Final model tested on external test set.
 %
 % Inputs:
-%   - train_features_Q2_imputed.csv, test_features_Q2_imputed.csv
+%   - train_features_Q2_imputed.csv, test_features_Q3_imputed.csv
 %   - connectivity_n88/<ID>/rdcm_connectivity.mat (with 'output_m_all')
 %
 % Usage:

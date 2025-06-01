@@ -1,12 +1,29 @@
 function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, innerK)
-% RUN_NESTED_CV_SVM  Nested CV for SVM regression on pre-normalized data
+% RUN_NESTED_CV_SVM  Nested CV for SVM regression 
 %
-%   results = RUN_NESTED_CV_SVM(X_train, Y_train, kernelType, outerK, innerK)
 %
 %   Performs k-fold outer and k-fold inner CV to tune SVM hyperparameters
-%   by maximizing mean R^2 in the inner folds. Assumes X_train is already
-%   normalized. Prints per-fold and overall R^2, RMSE, and MAE, and returns
+%   by maximizing mean R^2 in the inner folds.
+%   Prints per-fold and overall R^2, RMSE, and MAE, and returns
 %   a struct with all metrics and best parameters.
+% INPUTS:
+%   X_train   - n x p matrix of predictor features for training subjects
+%   Y_train   - n x 1 response vector for training subjects
+%   kernelType- string: 'rbf', 'linear', or 'polynomial' (default: 'rbf')
+%   outerK    - integer, number of outer folds (for model evaluation)
+%   innerK    - integer, number of inner folds (for hyperparameter tuning)
+%
+% OUTPUT:
+%   results - struct with fields:
+%       .outerR2        : R^2 values for each outer fold
+%       .outerRMSE      : RMSE for each outer fold
+%       .outerMAE       : MAE for each outer fold
+%       .meanR2         : Mean R^2 across outer folds
+%       .meanRMSE       : Mean RMSE across outer folds
+%       .meanMAE        : Mean MAE across outer folds
+%       .bestParamsList : Cell array of best hyperparameters (per outer fold)
+%       .bestParamsMode : Most frequent hyperparameters across folds (mode)
+%
 
     if nargin < 3 || isempty(kernelType)
         kernelType = 'rbf';
@@ -38,7 +55,7 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
 
     fprintf('\n===== Nested CV SVM (%s kernel) =====\n', kernelType);
     for i = 1:outerK
-        fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
+        %fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
         trIdx = training(outerCV, i);
         teIdx = test(outerCV, i);
         % Split raw data for this outer fold
@@ -115,15 +132,15 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
         outerMAE(i)  = mae;
         bestParamsList{i} = bestParams;
 
-        fprintf('Fold %d: R^2=%.4f, RMSE=%.4f, MAE=%.4f\n', i, r2, rmse, mae);
+        %fprintf('Fold %d: R^2=%.4f, RMSE=%.4f, MAE=%.4f\n', i, r2, rmse, mae);
     end
 
     % Summary
     meanR2   = mean(outerR2);
     meanRMSE = mean(outerRMSE);
     meanMAE  = mean(outerMAE);
-    fprintf('\n===== Summary =====\n');
-    fprintf('Mean R^2: %.4f, Mean RMSE: %.4f, Mean MAE: %.4f\n', meanR2, meanRMSE, meanMAE);
+    %fprintf('\n===== Summary =====\n');
+    %fprintf('Mean R^2: %.4f, Mean RMSE: %.4f, Mean MAE: %.4f\n', meanR2, meanRMSE, meanMAE);
 
     % Most frequent hyperparameters across outer folds
     Cs = cellfun(@(s) s.C, bestParamsList);
@@ -137,7 +154,7 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
         bestMode.PolyOrder = mode(orders);
     end
     fprintf('Best hyperparameters (mode across folds):\n');
-    disp(bestMode);
+    %disp(bestMode);
 
     % Return results
     results = struct();

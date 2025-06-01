@@ -46,18 +46,18 @@ Y_test  = test_tbl{:, strcmp(test_tbl.Properties.VariableNames, 'GDTOTAL_followU
 
 [X_train_norm, mu_final, sigma_final] = zscore(X_train);
 X_test_norm = (X_test - mu_final) ./ sigma_final;
-
-[all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train, Y_train);
+% 
+% [all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train, Y_train);
 
 
 fprintf('\n===== FINAL MODEL EVALUATION =====\n');
-fprintf('Retraining with Alpha=%.2f, Lambda=%.5f\n', bestAlpha, bestLambda);
+% fprintf('Retraining with Alpha=%.2f, Lambda=%.5f\n', bestAlpha, bestLambda);
 
 % Standardize training set
 
 
 [B, FitInfo] = lassoglm(X_train_norm, Y_train, 'normal', ...
-                        'Alpha', bestAlpha, 'Lambda', bestLambda, ...
+                        'Alpha', 0.90, 'Lambda', 0.37276, ...
                         'Standardize', false);
 coef = [FitInfo.Intercept; B];
 

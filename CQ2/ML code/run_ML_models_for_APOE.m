@@ -1,24 +1,19 @@
 %% =========================================================================
 % Purpose:
-%   This script runs nested cross-validation regression analyses using 
-%   generative latent features (from a VAE) for FC, on selected follow-up scores.
-%   It evaluates Random Forest, Elastic Net, and SVM models with different kernels,
-%   reporting all metrics for direct model comparison.
+%   This script assesses the predictive value of APOE genotype variables (APGEN1, APGEN2)
+%   for clinical follow-up outcomes using nested cross-validation with
+%   Random Forest, Elastic Net, and SVM regressors.
 %
-% Folder structure expected:
-%   - This script is placed alongside the VAE embedding files
-%   - Patient IDs and training targets are loaded from "data cleanup and management/final files"
-%
-% Key Notes:
-%   - Only the training set is used for all model evaluation to avoid leakage;
-%     test data are not referenced here.
-%   - Features are VAE latent variables matched by patient ID.
-%
-%% =========================================================================
+% Workflow and Data:
+%   - Loads only APOE features (APGEN1, APGEN2) from the imputed training set.
+%   - Regression targets are one-year follow-up scores: 'CDSOB_followUp',
+%     'GDTOTAL_followUp', or 'MMSCORE_followUp'. Select target at the top.
+%   - Only training data are used in nested CV to prevent data leakage.
+% =========================================================================
 
-clc; clear; close all
-rng(6, "twister")
-
+clc; clear; close all;
+%Set random seed for reproducibility
+rng(6, 'twister');
 % IMPORTANT:
 % The three target scores are 'CDSOB_followUp', 'GDTOTAL_followUp',
 % 'MMSCORE_followUp'. Select one for running this script. 'MMSCORE_followUp'
@@ -26,83 +21,40 @@ rng(6, "twister")
 
 targetScore = 'GDTOTAL_followUp'; % or'GDTOTAL_followUp' or 'MMSCORE_followUp'
 
+%%  Load and parse 
+%    We assume “data cleanup and management/final files” is two levels up.
+baseDir   = fullfile('..','..', 'data cleanup and management', 'final files');
+trainFile = fullfile(baseDir, 'train_features_Q3_imputed.csv');
 
-%    We go two levels up to reach the “latent_results/vae_results” directory, where FC_dim10.mat
-%    resides. That MAT-file must contain a structure fcData.vae_data.mu_latent,
-%    which is an [n_latent_ids × latent_dim] matrix of embeddings.
+% Read tables (test set is loaded but not used in nested CV)
+train_tbl = readtable(trainFile);
 
-scriptDir     = fileparts(mfilename('fullpath'));   % folder containing this script
-parentLevel1  = fileparts(scriptDir);                % one level up
-parentLevel2  = fileparts(parentLevel1);             % two levels up
-vaeResultsDir = fullfile(parentLevel2, 'latent_results', 'vae_results');
+% Identify columns: ID is first column, targets in this study are three
+target_names = {'MMSCORE_followUp','CDSOB_followUp','GDTOTAL_followUp'};
+target_cols  = find( ismember(train_tbl.Properties.VariableNames, target_names) );
+id_col       = 1;  % first column is ID
 
-if ~isfolder(vaeResultsDir)
-    error('Directory not found: %s\nMake sure "latent_results/vae_results" is two levels above.', vaeResultsDir)
-end
+% we only need to keep the columns that have the APGEN1, APGEN2. These two
+% will be our features. In the 'train_features_Q3_imputed.csv' there are
+% also the rest of the features for completeness, but they will not be used
+% in this script.
+apgen1_col = find( ismember(train_tbl.Properties.VariableNames, 'APGEN1') );
 
-FC_path = fullfile(vaeResultsDir, 'FC_dim10.mat');
-if ~isfile(FC_path)
-    error('File not found: %s', FC_path)
-end
+% Define feature columns as just the APGEN columns.
+feature_cols = setdiff(1:width(train_tbl), [id_col:(apgen1_col-1), target_cols]);
 
-fcData = load(FC_path);  % load the .mat file into a struct
-mu_latent = fcData.vae_data.mu_latent;  % extract [n_latent_ids × latent_dim]
+% Extract feature matrix and the chosen target 
+X_train = train_tbl{:, feature_cols};
+Y_train = train_tbl{:, strcmp(train_tbl.Properties.VariableNames, targetScore)};
 
-%  Load the list of unique patient IDs corresponding to mu_latent
+%  Standardize features
+% In nested cross‐validation, feature scaling is performed within each
+% outer fold of the Elastic Net and SVM routines (each computes its own μ/σ).
+% Random Forests do not require any scaling, so we omit global z‐scoring here.
 
-idsDir   = fullfile('..', '..', 'data cleanup and management', 'utilities');
-idsFile  = fullfile(idsDir, 'unique_patient_ids.csv');
-
-
-%
-% Read the CSV without assuming a header so we get exactly the first column
-idsTbl    = readtable(idsFile, 'ReadVariableNames', false);
-uniqueIDs = idsTbl{:,1};   % [n_latent_ids × 1] vector of patient identifiers
-
-% Ensure the number of IDs matches the number of rows in mu_latent
-nLatentIDs = numel(uniqueIDs);
-nLatents   = size(mu_latent, 1);
-if nLatentIDs ~= nLatents
-    error('Mismatch between %d IDs and %d rows in mu_latent.', nLatentIDs, nLatents)
-end
-
-
-% Load the training feature file to obtain MMSCORE_followUp outcomes
-featuresDir = fullfile('..', '..', 'data cleanup and management', 'final files');
-trainFile   = fullfile(featuresDir, 'train_features_Q2_imputed.csv');
-
-trainData = readtable(trainFile);     % read entire training table
-
-% Extract the ID column (first col)
-trainIDs = trainData{:,1};   % [n_train_ids × 1]
-
-
-trainData = sortrows(trainData, 1); %sort rows in ascending order to match 
-% the order of the ids in latent table
-mu_latent_withIds = [uniqueIDs mu_latent]; % the order that the letents are stored
-% is the same are the order in the unique ids list
-
-% keep only the ids in the train set
-mu_latent_withIds = mu_latent_withIds(ismember(mu_latent_withIds(:,1), trainIDs), :);
-
-% keep only the col with the score for Y_train
-scoreIdx = strcmp(trainData.Properties.VariableNames, targetScore);
-
-Y_train_withID = trainData{:, [1, find(scoreIdx)]};
-
-% final sets
-X_train = mu_latent_withIds(:,2:end);
-Y_train = Y_train_withID(:,2);
-
-
-%%  Standardize features
-%    In nested cross‐validation, feature scaling is performed within each
-%    outer fold of the Elastic Net and SVM routines (each computes its own μ/σ).
-%    Random Forests do not require any scaling, so we omit global z‐scoring here.
-
-%%  nested-CV folds
-outerK = 5;   
-innerK = 3;   
+%%  Specify nested-CV folds
+outerK = 5;   % number of outer folds
+innerK = 3;   % number of inner folds
 
 %% Run Random Forest regression
 fprintf('========== Random Forest Regression (nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
@@ -136,6 +88,8 @@ fprintf('Mean MAE = %.4f\n', mean(all_outer_mae_elnet));
 fprintf('Best hyperparameters:\n');
 fprintf('Alpha = %.2f\n', bestAlpha);
 fprintf('Lambda = %.5f\n\n', bestLambda);
+
+
 %% Run SVM RBF 
 fprintf(' ========== SVM Regression (RBF kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
 
@@ -189,8 +143,6 @@ fprintf('Best hyperparameters:\n');
 fprintf('C = %.4g\n', results_lin.bestParamsList.C);
 fprintf('Epsilon = %.3f\n\n', results_lin.bestParamsList.epsilon);
 
-%% 
-fprintf('All models runs completed.\n');
 
 %% Final comparison of mean R^2 for each model
 fprintf('===== Model Comparison (Mean R^2) =====\n');
@@ -199,4 +151,7 @@ fprintf('Elastic Net       Mean R2: %.4f\n', mean(all_outer_r2_elnet));
 fprintf('SVM (RBF)         Mean R2: %.4f\n', results_rbf.meanR2);
 fprintf('SVM (Polynomial)  Mean R2: %.4f\n', results_poly.meanR2);
 fprintf('SVM (Linear)      Mean R2: %.4f\n\n', results_lin.meanR2);
+
+
+fprintf('All models runs completed.\n');
 
