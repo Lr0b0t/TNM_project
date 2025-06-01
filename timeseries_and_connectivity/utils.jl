@@ -620,3 +620,31 @@ function get_connectivity_matrix(masked_connectivity_vectors::Dict{String, Dict{
     # Transpose each row vector, then vertically concatenate into matrix
     return reduce(vcat, [x' for x in data])
 end
+
+
+function unflatten_connectivity(flat_data::Matrix{Float64}, bna_mask_path::String; symmetric::Bool = true)
+    # Load mask
+    A_array = readdlm(bna_mask_path, ',', Int)
+    A_matrix = BitMatrix(A_array .== 1)
+
+    # Use appropriate mask indexing
+    mask_idx = symmetric ? findall(triu(A_matrix) .== 1) : findall(A_matrix .== 1)
+
+    # Initialize 3D array: 246×246×2
+    full_matrix = zeros(Float64, 246, 246, size(flat_data, 2))
+
+    # Fill in values using mask indices
+    for i in 1:size(flat_data, 2)  # For each column (e.g., rdcm, fc_z)
+        tmp_mat = zeros(Float64, 246, 246)
+        tmp_mat[mask_idx] .= flat_data[:, i]
+
+        # If symmetric, fill lower triangle to mirror upper
+        if symmetric
+            tmp_mat .= tmp_mat + tmp_mat' .- diagm(diag(tmp_mat))
+        end
+
+        full_matrix[:, :, i] = tmp_mat
+    end
+
+    return full_matrix  # size will be 246×246×2
+end
