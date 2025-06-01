@@ -1,6 +1,6 @@
 clc; clear; close all
 
-rng(2, "twister")
+rng(6, "twister")
 %    We go two levels up to reach the “latent_results/vae_results” directory, where FC_dim10.mat
 %    resides. That MAT-file must contain a structure fcData.vae_data.mu_latent,
 %    which is an [n_latent_ids × latent_dim] matrix of embeddings.
@@ -61,7 +61,7 @@ mu_latent_withIds = [uniqueIDs mu_latent]; % the order that the letents are stor
 mu_latent_withIds = mu_latent_withIds(ismember(mu_latent_withIds(:,1), trainIDs), :);
 
 % keep only the col with the score for Y_train
-targetScore = 'MMSCORE_followUp'; %'CDSOB_followUp'; %'GDTOTAL_followUp'; % MMSCORE_followUp
+targetScore = 'CDSOB_followUp'; %'CDSOB_followUp'; %'GDTOTAL_followUp'; % MMSCORE_followUp
 scoreIdx = strcmp(trainData.Properties.VariableNames, targetScore);
 
 Y_train_withID = trainData{:, [1, find(scoreIdx)]};
@@ -168,3 +168,14 @@ fprintf('Epsilon = %.3f\n\n', results_lin.bestParamsMode.epsilon);
 %% 
 fprintf('All models runs completed.\n');
 
+
+%% Final comparison of mean R^2 for each model
+fprintf('===== Model Comparison (Mean R^2) =====\n');
+fprintf('Random Forest     Mean R2: %.4f\n', mean_outer_r2_rf);
+fprintf('Elastic Net       Mean R2: %.4f\n', mean(all_outer_r2_elnet));
+fprintf('SVM (RBF)         Mean R2: %.4f\n', results_rbf.meanR2);
+fprintf('SVM (Polynomial)  Mean R2: %.4f\n', results_poly.meanR2);
+fprintf('SVM (Linear)      Mean R2: %.4f\n\n', results_lin.meanR2);
+
+
+fprintf('All models runs completed.\n');
