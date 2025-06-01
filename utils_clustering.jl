@@ -113,7 +113,25 @@ function train_vae_model(data::AbstractArray{Float32}, latent_dim::Int, num_epoc
         train_entropy=train_entropy, val_entropy=val_entropy
     )
 end
+rescale(A; dims=1) = (A .- mean(A, dims=dims)) ./ max.(std(A, dims=dims), eps())
 
+
+function run_pca(connectivity_matrix::Matrix{Float64}; dims::Int=2)
+    # Normalize each feature to [0, 1]
+    connectivity_matrix = rescale(connectivity_matrix, dims=1)
+    
+    # Run PCA
+    pca_model = fit(PCA, connectivity_matrix; maxoutdim=dims)
+    pca_result = transform(pca_model, connectivity_matrix)
+    
+    return pca_result
+end
+function run_tsne(connectivity_matrix::Matrix{Float64}; dims::Int=2, perplexity::Int=30)
+    connectivity_matrix = rescale(connectivity_matrix, dims=1)  # Normalize each feature to [0, 1]
+    
+    tsne_result = tsne(connectivity_matrix, dims,  0,   1000 , perplexity)
+    return tsne_result
+end
 
 
 function cluster(matrix_to_cluster::Matrix{Float64}, 
