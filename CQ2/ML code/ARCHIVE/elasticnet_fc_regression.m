@@ -1,139 +1,50 @@
-%--------------------------------------------------------------------------
-% Script: elasticnet_fc_regression.m
-%
-% Purpose:
-%   - Predict MMSE using elastic net regression, using FC matrices as input.
-%   - Dimensionality reduction: vectorized, PCA, or graph-theory features.
-%   - Nested CV (R^2 selection, NO leakage). Final model tested on external test set.
-%
-% Inputs:
-%   - train_features_Q2_imputed.csv, test_features_Q2_imputed.csv
-%   - connectivity_n88/<ID>/func_connectivity.mat (with 'fc_mat')
-%
-% Usage:
-%   Set 'dim_reduc' to 'vectorized', 'pca', or 'graph' below.
-%--------------------------------------------------------------------------
-
 clc; clear; close all;
-
-%% ---- USER OPTION: choose dim reduction type ----
-dim_reduc = 'graph';  
-% 'vectorized', 'pca', or 'graph'
-
-%% ---- PATH HANDLING ----
 % Find baseDir (where this script lives)
 baseDir = pwd;
+dataDir = fullfile(baseDir, 'final files');
 
 % Path to features CSVs (relative to here)
-featuresDir = fullfile('..','..', 'data cleanup and management', 'final files');
-trainFile = fullfile(featuresDir, 'train_features_Q2_imputed.csv');
-
+baseDir   = fullfile('..','..','data cleanup and management', 'final files');
+trainFile = fullfile(baseDir, 'train_features_Q2_imputed.csv');
+% % 
 trainData = readtable(trainFile);
-
+connDir = fullfile(dataDir, 'connectivity_n88');
 
 id_col = 1;
 mmse_col = find(strcmp(trainData.Properties.VariableNames, 'MMSCORE_followUp'));
 train_ids = trainData{:, id_col};
-test_ids  = testData{:, id_col};
+% test_ids  = testData{:, id_col};
 Y_train = trainData{:, mmse_col};
+% Helper function to zero-pad patient IDs to 7 digits
+pad_id = @(id) sprintf('%07d', id);
+
 
 fprintf('\nLoading TRAIN FC matrices...\n');
 fc_train = load_fc_matrices(train_ids, connDir, pad_id);
 fprintf('Loading TEST FC matrices...\n');
-fc_test  = load_fc_matrices(test_ids,  connDir, pad_id);
+% fc_test  = load_fc_matrices(test_ids,  connDir, pad_id);
 
-%% ---- FEATURE EXTRACTION ----
-switch lower(dim_reduc)
-    case 'vectorized'
-        X_train = vectorize_fc(fc_train);
-        X_test  = vectorize_fc(fc_test);
-        feature_labels = vectorized_labels(size(fc_train{1}));
-    case 'pca'
-        X_train = vectorize_fc(fc_train);
-        X_test  = vectorize_fc(fc_test);
-        [X_train_norm, mu, sigma] = zscore(X_train);
-        X_test_norm = (X_test - mu) ./ sigma;
-        [coeff, score_train, ~, ~, explained] = pca(X_train_norm);
-        cumExplained = cumsum(explained);
-        numPC = find(cumExplained >= 95, 1, 'first');
-        if isempty(numPC), numPC = length(explained); end
-        fprintf('Retaining %d PCs (%.1f%% variance)\n', numPC, cumExplained(numPC));
-        X_train = score_train(:, 1:numPC);
-        X_test  = (X_test_norm * coeff(:,1:numPC));
-        feature_labels = arrayfun(@(i) sprintf('PC%d',i), 1:numPC, 'UniformOutput', false);
-    case 'graph'
-        X_train = extract_graph_features(fc_train);
-        X_test  = extract_graph_features(fc_test);
-        feature_labels = graph_feature_labels(size(fc_train{1},1));
-    otherwise
-        error('Unknown dim_reduc: %s', dim_reduc);
-end
 
-%% === NESTED CROSS-VALIDATION ===
-outerK = 5;
-innerK = 3;
-outerCV = cvpartition(length(Y_train), 'KFold', outerK);
+X_train = extract_graph_features(fc_train);
+X_test  = extract_graph_features(fc_test);
+feature_labels = graph_feature_labels(size(fc_train{1},1));
 
-alpha_vals = [0.1, 0.3, 0.5, 0.7, 0.9, 1]; % Elastic net/LASSO
-fprintf('\n===== Starting Nested CV (Elastic Net, R^2 selection) =====\n');
-all_outer_r2 = zeros(outerK, 1);
-all_outer_rmse = zeros(outerK, 1);
-all_params = cell(outerK, 1);
 
-for i = 1:outerK
-    fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
-    trainIdx = training(outerCV, i);
-    valIdx = test(outerCV, i);
+%%
+[ all_outer_r2_elnet, all_outer_rmse_elnet, all_outer_mae_elnet, bestParamsList_elnet, bestAlpha, bestLambda ] = ...
+    run_Elastic_Net_Regression( X_train, Y_train, outerK, innerK );
 
-    Xtr_outer = X_train(trainIdx,:);
-    Ytr_outer = Y_train(trainIdx);
-    Xval_outer = X_train(valIdx,:);
-    Yval_outer = Y_train(valIdx);
-
-    % --- Standardize using ONLY outer train (for each fold) ---
-    [Xtr_outer_norm, mu, sigma] = zscore(Xtr_outer);
-    Xval_outer_norm = (Xval_outer - mu) ./ sigma;
-
-    % --- Inner CV for hyperparams ---
-    bestR2 = -Inf;
-    for a = alpha_vals
-        [B, FitInfo] = lassoglm(Xtr_outer_norm, Ytr_outer, 'normal', ...
-            'CV', innerK, 'Alpha', a, 'Standardize', false);
-        idx = FitInfo.IndexMinDeviance;
-        Y_pred_cv = Xtr_outer_norm * B(:,idx) + FitInfo.Intercept(idx);
-        sse = sum((Ytr_outer - Y_pred_cv).^2);
-        sst = sum((Ytr_outer - mean(Ytr_outer)).^2);
-        r2_cv = 1 - sse / sst;
-        if r2_cv > bestR2
-            bestR2 = r2_cv;
-            bestB = B(:,idx);
-            bestIntercept = FitInfo.Intercept(idx);
-            bestAlpha = a;
-            bestLambda = FitInfo.Lambda(idx);
-        end
-    end
-    fprintf('Best inner params: alpha=%.2f, lambda=%.4g (Inner mean R^2=%.4f)\n', bestAlpha, bestLambda, bestR2);
-
-    % --- Retrain on all outer train with best params ---
-    [Bfinal, FitInfoFinal] = lassoglm(Xtr_outer_norm, Ytr_outer, 'normal', ...
-        'Alpha', bestAlpha, 'Lambda', bestLambda, 'Standardize', false);
-    coef = Bfinal;
-    intercept = FitInfoFinal.Intercept;
-
-    % --- Predict on held-out fold (never seen in any inner CV) ---
-    Ypred_outer = Xval_outer_norm * coef + intercept;
-
-    % --- Outer fold metrics ---
-    rmse_outer = sqrt(mean((Yval_outer - Ypred_outer).^2));
-    sse = sum((Yval_outer - Ypred_outer).^2);
-    sst = sum((Yval_outer - mean(Yval_outer)).^2);
-    r2_outer = 1 - sse / sst;
-    fprintf('  Outer fold RMSE = %.3f, R^2 = %.3f\n', rmse_outer, r2_outer);
-
-    all_outer_r2(i) = r2_outer;
-    all_outer_rmse(i) = rmse_outer;
-    all_params{i} = struct('alpha', bestAlpha, 'lambda', bestLambda);
-end
+% summary 
+fprintf('\nElastic Net Nested CV Results:\n');
+fprintf('Per-fold R2 scores: [ %s ]\n', sprintf('%.4f ', all_outer_r2_elnet));
+fprintf('Per-fold RMSE: [ %s ]\n', sprintf('%.4f ', all_outer_rmse_elnet));
+fprintf('Per-fold MAE: [ %s ]\n', sprintf('%.4f ', all_outer_mae_elnet));
+fprintf('Mean R2 = %.4f\n', mean(all_outer_r2_elnet));
+fprintf('Mean RMSE = %.4f\n', mean(all_outer_rmse_elnet));
+fprintf('Mean MAE = %.4f\n', mean(all_outer_mae_elnet));
+fprintf('Most frequent hyperparameters:\n');
+fprintf('Alpha = %.2f\n', bestAlpha);
+fprintf('Lambda = %.5f\n\n', bestLambda);
 
 fprintf('\n===== Nested CV Complete =====\n');
 fprintf('Mean outer RMSE: %.3f\n', mean(all_outer_rmse));
@@ -211,20 +122,8 @@ function matrices = load_fc_matrices(ids, connDir, pad_id)
     end
 end
 
-function X = vectorize_fc(matrices)
-    N = size(matrices{1}, 1);
-    mask = triu(true(N), 1);
-    X = zeros(length(matrices), sum(mask(:)));
-    for i = 1:length(matrices)
-        X(i, :) = matrices{i}(mask);
-    end
-end
 
-function labels = vectorized_labels(N)
-    mask = triu(true(N), 1);
-    [row, col] = find(mask);
-    labels = arrayfun(@(i,j) sprintf('Conn_%d_%d',i,j), row, col, 'UniformOutput', false);
-end
+
 
 function Xg = extract_graph_features(matrices)
     N = size(matrices{1}, 1);

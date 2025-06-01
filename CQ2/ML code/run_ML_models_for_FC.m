@@ -71,9 +71,9 @@ Y_train = Y_train_withID(:,2);
 
 
 %%  Standardize features
-%    Although Random Forests do not strictly need feature scaling, we
-%    standardize to keep all models (especially SVM/Elastic Net) comparable.
-[X_train_norm, mu, sigma] = zscore(X_train);
+%    In nested cross‐validation, feature scaling is performed within each
+%    outer fold of the Elastic Net and SVM routines (each computes its own μ/σ).
+%    Random Forests do not require any scaling, so we omit global z‐scoring here.
 
 %%  nested-CV folds
 outerK = 5;   
@@ -83,7 +83,7 @@ innerK = 3;
 fprintf('========== Random Forest Regression (nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
 
 [ all_outer_r2_rf, mean_outer_r2_rf, std_outer_r2_rf, bestParamsList_rf, bestParamsMode_rf ] = ...
-    run_Random_Forest_Regression( X_train_norm, Y_train, outerK, innerK );
+    run_Random_Forest_Regression( X_train, Y_train, outerK, innerK );
 
 %  summary
 fprintf('\nRandom Forest Nested CV Results:\n');
@@ -98,7 +98,7 @@ fprintf('MaxNumSplits = %d\n\n', bestParamsMode_rf.MaxNumSplits);
 fprintf(' ========== Elastic Net Regression (nested CV: outerK=%d, innerK=%d)==========\n', outerK, innerK);
 
 [ all_outer_r2_elnet, all_outer_rmse_elnet, all_outer_mae_elnet, bestParamsList_elnet, bestAlpha, bestLambda ] = ...
-    run_Elastic_Net_Regression( X_train_norm, Y_train, outerK, innerK );
+    run_Elastic_Net_Regression( X_train, Y_train, outerK, innerK );
 
 % summary 
 fprintf('\nElastic Net Nested CV Results:\n');
@@ -114,7 +114,7 @@ fprintf('Lambda = %.5f\n\n', bestLambda);
 %% Run SVM RBF 
 fprintf(' ========== SVM Regression (RBF kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
 
-results_rbf = run_nested_cv_SVM( X_train_norm, Y_train, 'rbf', outerK, innerK );
+results_rbf = run_nested_cv_SVM( X_train, Y_train, 'rbf', outerK, innerK );
 
 %  summary
 fprintf('\nSVM (RBF) Nested CV Results:\n');
@@ -132,7 +132,7 @@ fprintf('Sigma = %.4g\n\n', results_rbf.bestParamsMode.sigma);
 %%  Run SVM with Polynomial kernel
 fprintf(' ========== SVM Regression (Polynomial kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
 
-results_poly = run_nested_cv_SVM( X_train_norm, Y_train, 'polynomial', outerK, innerK );
+results_poly = run_nested_cv_SVM( X_train, Y_train, 'polynomial', outerK, innerK );
 
 % final summary
 fprintf('\nSVM (Polynomial) Nested CV Results:\n');
@@ -150,7 +150,7 @@ fprintf('PolyOrder = %d\n\n', results_poly.bestParamsMode.PolyOrder);
 %% Run SVM with Linear kernel
 fprintf('========== SVM Regression (Linear kernel, nested CV: outerK=%d, innerK=%d) ==========\n', outerK, innerK);
 
-results_lin = run_nested_cv_SVM( X_train_norm, Y_train, 'linear', outerK, innerK );
+results_lin = run_nested_cv_SVM( X_train, Y_train, 'linear', outerK, innerK );
 
 %  summary 
 fprintf('\nSVM (Linear) Nested CV Results:\n');

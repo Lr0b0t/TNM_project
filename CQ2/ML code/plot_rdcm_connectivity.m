@@ -7,8 +7,8 @@ dataDir = fullfile(baseDir, 'final files');
 connDir = fullfile(dataDir, 'connectivity_n88');
 
 % Load train/test splits (for IDs and MMSE follow-up)
-trainFile = fullfile(dataDir, 'train_features_Q2_imputed.csv');
-testFile  = fullfile(dataDir, 'test_features_Q2_imputed.csv');
+trainFile = fullfile('..','..', 'data cleanup and management', 'final files');
+testFile  = fullfile(baseDir, 'train_features_Q2_imputed.csv');
 trainData = readtable(trainFile);
 testData  = readtable(testFile);
 
@@ -63,27 +63,27 @@ for i = 1:length(test_ids)
 end
 
 %%  ------------------ plotting of all the functional connectivity matrices ----------------------------
-% for k = 1:length(train_matrices)
-%     figure; clf;
-%     imagesc(train_matrices{k});
-%     title(['Train subject ', num2str(train_ids(k)), ' (', num2str(k), '/', num2str(length(train_matrices)), ')']);
-%     colorbar;
-%     % caxis([-1 1]);
-%     xlabel('Node');
-%     ylabel('Node');
-%     % Pause before showing next matrix
-%     disp('Press any key to continue to the next matrix...');
-%     pause;
-% end
-% 
-% for k = 1:length(test_matrices)
-%     figure; clf;
-%     imagesc(test_matrices{k});
-%     title(['Test subject ', num2str(test_ids(k)), ' (', num2str(k), '/', num2str(length(test_matrices)), ')']);
-%     colorbar;
-%     % caxis([-1 1]);
-%     xlabel('Node');
-%     ylabel('Node');
-%     disp('Press any key to continue to the next matrix...');
-%     pause;
-% end
+for k = 1:length(train_matrices)
+    figure; clf;
+    imagesc(train_matrices{k});
+    title(['Train subject ', num2str(train_ids(k)), ' (', num2str(k), '/', num2str(length(train_matrices)), ')']);
+    colorbar;
+    % caxis([-1 1]);
+    xlabel('Node');
+    ylabel('Node');
+    % Pause before showing next matrix
+    disp('Press any key to continue to the next matrix...');
+    pause;
+end
+
+for k = 1:length(test_matrices)
+    figure; clf;
+    imagesc(test_matrices{k});
+    title(['Test subject ', num2str(test_ids(k)), ' (', num2str(k), '/', num2str(length(test_matrices)), ')']);
+    colorbar;
+    % caxis([-1 1]);
+    xlabel('Node');
+    ylabel('Node');
+    disp('Press any key to continue to the next matrix...');
+    pause;
+end

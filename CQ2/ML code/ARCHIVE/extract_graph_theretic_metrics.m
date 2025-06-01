@@ -110,57 +110,65 @@ fc_test  = load_fc_matrices(test_ids,  connDir, pad_id);
 fc_all   = [fc_train; fc_test];
 
 %% ---- EXTRACT GRAPH-THEORETIC FEATURES ----
-% 1) Functional Connectivity features (undirected)
-fprintf('\nExtracting functional (undirected) graph features for FC matrices...\n');
-[X_train_FC, FC_labels] = extract_fc_graph_features(fc_train);
-[X_test_FC,  ~]         = extract_fc_graph_features(fc_test);
-X_all_FC = [X_train_FC; X_test_FC];  % Combine train+test
+% % 1) Functional Connectivity features (undirected)
+% fprintf('\nExtracting functional (undirected) graph features for FC matrices...\n');
+% [X_train_FC, FC_labels] = extract_fc_graph_features(fc_train);
+% [X_test_FC,  ~]         = extract_fc_graph_features(fc_test);
+% X_all_FC = [X_train_FC; X_test_FC];  % Combine train+test
 
 % 2) Effective Connectivity features (directed)
 fprintf('\nExtracting effective (directed) graph features for EC from rDCM matrices...\n');
 [X_train_EC, EC_labels] = extract_ec_graph_features(ec_rDCM_train);
 [X_test_EC,  ~]         = extract_ec_graph_features(ec_rDCM_test);
 X_all_EC = [X_train_EC; X_test_EC];
+X_train = X_train_EC;
+X_test = X_test_EC
+% [all_outer_r2_elnet, all_outer_rmse_elnet, all_outer_mae_elnet, bestParamsList_elnet, bestAlpha, bestLambda ] = ...
+%     run_Elastic_Net_Regression( X_train_EC, X_test_EC, 5, 3 );
 
-%% ---- SAVE COMBINED FEATURES AS TABLES WITH HEADER ROWS ----
-% Create an output directory under baseDir
-outputDir = fullfile(baseDir, 'combined_graph_features');
-if ~exist(outputDir, 'dir')
-    mkdir(outputDir);
-    fprintf('Created output directory: %s\n', outputDir);
-end
+[ all_outer_r2_rf, mean_outer_r2_rf, std_outer_r2_rf, bestParamsList_rf, bestParamsMode_rf ] = ...
+    run_Random_Forest_Regression( X_train, Y_train, 5, 3 );
 
-%%% --- Functional Connectivity (FC) ---%  
-% Prepare table: first column "ID", then FC_labels
-FC_varNames = ['ID', FC_labels];            % 1×(2N+3) cell array of strings
-T_FC = array2table([all_ids, X_all_FC], 'VariableNames', FC_varNames);
 
-% Save to .mat
-save(fullfile(outputDir, 'combined_FC_table.mat'), 'T_FC');
-
-% Also write to CSV (this will put variable names as the first row)
-writetable(T_FC, fullfile(outputDir, 'combined_FC.csv'));
-
-fprintf('\nSaved combined FC features to:\n');
-fprintf('  %s\n', fullfile(outputDir, 'combined_FC_table.mat'));
-fprintf('  %s\n', fullfile(outputDir, 'combined_FC.csv'));
-
-%%% --- Effective Connectivity (EC) ---%  
-% Prepare table: first column "ID", then EC_labels
-EC_varNames = ['ID', EC_labels];            % 1×(5N+4) cell array of strings
-T_EC = array2table([all_ids, X_all_EC], 'VariableNames', EC_varNames);
-
-% Save to .mat
-save(fullfile(outputDir, 'combined_EC_table.mat'), 'T_EC');
-
-% Also write to CSV
-writetable(T_EC, fullfile(outputDir, 'combined_EC.csv'));
-
-fprintf('\nSaved combined EC features to:\n');
-fprintf('  %s\n', fullfile(outputDir, 'combined_EC_table.mat'));
-fprintf('  %s\n', fullfile(outputDir, 'combined_EC.csv'));
-
-fprintf('\nAll combined feature tables are ready in %s\n', outputDir);
+% %% ---- SAVE COMBINED FEATURES AS TABLES WITH HEADER ROWS ----
+% % Create an output directory under baseDir
+% outputDir = fullfile(baseDir, 'combined_graph_features');
+% if ~exist(outputDir, 'dir')
+%     mkdir(outputDir);
+%     fprintf('Created output directory: %s\n', outputDir);
+% end
+% 
+% %%% --- Functional Connectivity (FC) ---%  
+% % Prepare table: first column "ID", then FC_labels
+% FC_varNames = ['ID', FC_labels];            % 1×(2N+3) cell array of strings
+% T_FC = array2table([all_ids, X_all_FC], 'VariableNames', FC_varNames);
+% 
+% % Save to .mat
+% save(fullfile(outputDir, 'combined_FC_table.mat'), 'T_FC');
+% 
+% % Also write to CSV (this will put variable names as the first row)
+% writetable(T_FC, fullfile(outputDir, 'combined_FC.csv'));
+% 
+% fprintf('\nSaved combined FC features to:\n');
+% fprintf('  %s\n', fullfile(outputDir, 'combined_FC_table.mat'));
+% fprintf('  %s\n', fullfile(outputDir, 'combined_FC.csv'));
+% 
+% %%% --- Effective Connectivity (EC) ---%  
+% % Prepare table: first column "ID", then EC_labels
+% EC_varNames = ['ID', EC_labels];            % 1×(5N+4) cell array of strings
+% T_EC = array2table([all_ids, X_all_EC], 'VariableNames', EC_varNames);
+% 
+% % Save to .mat
+% save(fullfile(outputDir, 'combined_EC_table.mat'), 'T_EC');
+% 
+% % Also write to CSV
+% writetable(T_EC, fullfile(outputDir, 'combined_EC.csv'));
+% 
+% fprintf('\nSaved combined EC features to:\n');
+% fprintf('  %s\n', fullfile(outputDir, 'combined_EC_table.mat'));
+% fprintf('  %s\n', fullfile(outputDir, 'combined_EC.csv'));
+% 
+% fprintf('\nAll combined feature tables are ready in %s\n', outputDir);
 
 %% --- HELPER FUNCTIONS ---
 

@@ -16,7 +16,7 @@
 %--------------------------------------------------------------------------
 
 clc; clear; close all;
-rng(42, 'twister');
+rng(6, 'twister');
 
 
 %% ---- 1. Load Data ----
@@ -39,15 +39,15 @@ id_col = 1; % First column is assumed to be ID
 feature_cols = setdiff(1:width(train_tbl), [id_col, target_cols]);
 
 X_train = train_tbl{:, feature_cols};
-Y_train = train_tbl{:, strcmp(train_tbl.Properties.VariableNames, 'MMSCORE_followUp')};
+Y_train = train_tbl{:, strcmp(train_tbl.Properties.VariableNames, 'GDTOTAL_followUp')};
 X_test  = test_tbl{:, feature_cols};
-Y_test  = test_tbl{:, strcmp(test_tbl.Properties.VariableNames, 'MMSCORE_followUp')};
+Y_test  = test_tbl{:, strcmp(test_tbl.Properties.VariableNames, 'GDTOTAL_followUp')};
 
 
 [X_train_norm, mu_final, sigma_final] = zscore(X_train);
 X_test_norm = (X_test - mu_final) ./ sigma_final;
 
-[all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train_norm, Y_train);
+[all_outer_r2, all_outer_rmse, all_outer_mae, bestParamsList, bestAlpha, bestLambda] = run_Elastic_Net_Regression(X_train, Y_train);
 
 
 fprintf('\n===== FINAL MODEL EVALUATION =====\n');

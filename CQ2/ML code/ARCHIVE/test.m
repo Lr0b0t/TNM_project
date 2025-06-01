@@ -1,104 +1,70 @@
-clc; close all; clear;
+clc; clear; close all;
 
 
-% Add path if needed
-baseDir = fileparts(pwd); % go up from /utilities/
-dataDir = fullfile(baseDir, 'final files');
+% ------------------------------------------------------------------------
+% Script: load_vae_results.m
+% Purpose: From inside the “MLCode” folder, move two levels up, navigate
+%          to “latentresults/vae-results”, and load the specified .mat files.
+%
+% Usage:
+%   1. Place this script in the “MLCode” directory (i.e. cq2.mlcode/MLCode).
+%   2. Run it; it will automatically locate and load “fc-dim10.mat” and
+%      “rdcm-dim10.mat” from the latentresults/vae-results folder.
+% ------------------------------------------------------------------------
 
-trainFile = fullfile(dataDir, 'train_features_Q2.csv');
-testFile  = fullfile(dataDir, 'test_features_Q2.csv');
+% 1) Determine the folder where this script lives (MLCode folder)
+scriptDir = fileparts( mfilename('fullpath') );
 
-% Load training data
-trainData = readtable(trainFile);
+% 2) Go two levels up from MLCode:
+%      MLCode → cq2.mlcode → (parent of cq2.mlcode)
+parentLevel1 = fileparts(scriptDir);       % one level up: cq2.mlcode
+parentLevel2 = fileparts(parentLevel1);    % two levels up
 
-% Remove ID column (assuming it's the first column)
-trainData(:,1) = [];
+% 3) Construct path to “latentresults/vae-results”
+vaeResultsDir = fullfile(parentLevel2, 'latent_results', 'vae_results');
 
-% Again identify numeric variables after removing the ID
-numericVars = varfun(@isnumeric, trainData, 'OutputFormat', 'uniform');
-numericData = trainData{:, numericVars};
-
-%%
-
-
-
-
-% Normalize the features (z-score)
-[normData, mu, sigma] = zscore(numericData);
-
-% Target variables (assuming the last 3 columns are the cognitive decline scores)
-Y = normData(:, end-2:end);
-
-% Features (all columns except the last 3)
-X = normData(:, 1:end-3);
-
-
-
-
-
-
-% Try different imputation methods
-imputeMethods = {'mean', 'median', 'knn', 'movmean', 'linear'};
-
-for i = 1:length(imputeMethods)
-    method = imputeMethods{i};
-    fprintf('Trying method: %s\n', method);
-    try
-        filledData = impute_data(numericData, method);
-        % Check if it worked
-        if any(isnan(filledData), 'all')
-            fprintf('  --> Still has NaNs!\n');
-        else
-            fprintf('  --> Success, no NaNs remaining.\n');
-        end
-    catch ME
-        fprintf('  --> Error with method %s: %s\n', method, ME.message);
-    end
+% 4) Verify that the folder exists
+if ~isfolder(vaeResultsDir)
+    error('Directory not found: %s\nMake sure “latentresults/vae-results” exists two levels above MLCode.', ...
+           vaeResultsDir);
 end
 
 
+% connDir = fullfile(baseDir, 'latentresults\v');
+% if ~exist(connDir, 'dir')
+%     connDir = fullfile(baseDir, '..','..', 'latentresults');
+% end
 
+% 5) Define full paths to the .mat files
+file1 = fullfile(vaeResultsDir, 'FC_dim10.mat');
+file2 = fullfile(vaeResultsDir, 'RDCM_dim10.mat');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function filled = impute_data(data, method)
-    switch lower(method)
-        case 'mean'
-            filled = fillmissing(data, 'constant', mean(data, 'omitnan'));
-            
-        case 'median'
-            filled = fillmissing(data, 'constant', median(data, 'omitnan'));
-            
-        case 'knn'
-            % Requires Statistics and Machine Learning Toolbox
-            filled = knnimpute(data')';  % transpose for knnimpute format
-            
-        case 'movmean'
-            filled = fillmissing(data, 'movmean', 5);
-            
-        case 'pchip'
-            filled = fillmissing(data, 'pchip', 2);  % Piecewise cubic interpolation
-            
-        case 'linear'
-            filled = fillmissing(data, 'linear');
-            
-        case 'nearest'
-            filled = fillmissing(data, 'nearest');
-            
-        otherwise
-            error('Unknown method: %s', method);
-    end
+% 6) Check for existence before loading
+if ~isfile(file1)
+    error('File not found: %s', file1);
 end
+if ~isfile(file2)
+    error('File not found: %s', file2);
+end
+
+% 7) Load the .mat files into distinct variables (structures)
+fcData   = load(file1);    % loads all variables from fc-dim10.mat into struct fcData
+rdcmData = load(file2);    % loads all variables from rdcm-dim10.mat into struct rdcmData
+
+% 8) Optional: Display confirmation and list loaded variables
+fprintf('Loaded ''%s'' with variables:\n', file1);
+disp(fieldnames(fcData));
+
+fprintf('Loaded ''%s'' with variables:\n', file2);
+disp(fieldnames(rdcmData));
+
+% 9) (Now you can access the contents of each .mat file via fcData.variableName,
+%       rdcmData.variableName, etc.)
+
+% Example usage:
+%   If fc-dim10.mat contained a variable called “fc_matrix”, you can reference it as:
+%       myFC = fcData.fc_matrix;
+%
+%   Similarly, if rdcm-dim10.mat contained “rdcm_results”, you can do:
+%       myRDCM = rdcmData.rdcm_results;
+% ------------------------------------------------------------------------

@@ -3,7 +3,7 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
 %
 %   results = RUN_NESTED_CV_SVM(X_train, Y_train, kernelType, outerK, innerK)
 %
-%   Performs 5-fold outer and 3-fold inner CV to tune SVM hyperparameters
+%   Performs k-fold outer and k-fold inner CV to tune SVM hyperparameters
 %   by maximizing mean R^2 in the inner folds. Assumes X_train is already
 %   normalized. Prints per-fold and overall R^2, RMSE, and MAE, and returns
 %   a struct with all metrics and best parameters.
@@ -27,7 +27,7 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
     end
 
     % CV setting. Number of folds were given as input
-    
+
     outerCV = cvpartition(size(X_train,1), 'KFold', outerK);
 
     % Storage
@@ -41,10 +41,18 @@ function results = run_nested_cv_SVM(X_train, Y_train, kernelType, outerK, inner
         fprintf('\n--- Outer Fold %d/%d ---\n', i, outerK);
         trIdx = training(outerCV, i);
         teIdx = test(outerCV, i);
-        Xtr = X_train(trIdx, :);
-        Ytr = Y_train(trIdx);
-        Xte = X_train(teIdx, :);
-        Yte = Y_train(teIdx);
+        % Split raw data for this outer fold
+        Xtr_raw = X_train(trIdx, :);
+        Ytr     = Y_train(trIdx);
+        Xte_raw = X_train(teIdx, :);
+        Yte     = Y_train(teIdx);
+    
+        % Standardize using only the outer‐training set
+        [Xtr, mu, sigma] = zscore(Xtr_raw);
+    
+        % Apply the same mu/sigma to the held‐out fold
+        Xte = (Xte_raw - mu) ./ sigma;
+
 
         % Inner CV to select hyperparameters
         innerCV = cvpartition(size(Xtr,1), 'KFold', innerK);

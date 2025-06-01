@@ -16,7 +16,7 @@
 %--------------------------------------------------------------------------
 
 clc; clear; close all;
-rng(42, 'twister');
+rng(6, 'twister');
 % ---- 1. Load Data ----
 
 baseDir = fullfile('..','..', 'data cleanup and management', 'final files');
@@ -48,14 +48,9 @@ Y_test  = test_tbl{:, strcmp(test_tbl.Properties.VariableNames, 'MMSCORE_followU
 X_test_norm = (X_test - mu) ./ sigma;
 
 %%
-outerK = 5; innerK = 5;
+outerK = 5; innerK = 3;
  [all_outer_r2_rf, mean_outer_r2, std_outer_r2, bestParamsList, ...
- bestParamsMode] = run_Random_Forest_Regression(X_train_norm, Y_train, outerK, innerK)
-% [all_outer_r2, mean_outer_r2, std_outer_r2, bestParamsList, bestParamsMode] = ...
-%          run_Random_Forest_Regressor_Extended(X_train_norm, Y_train, outerK, innerK)% results = run_nested_cv_SVM(X_train, Y_train, 'rbf',outerK, innerK);
-% results2 = run_nested_cv_SVM(X_train, Y_train, 'polynomial',outerK, innerK);
-% results2 = run_nested_cv_SVM(X_train, Y_train, 'linear',outerK, innerK);
-
+ bestParamsMode] = run_Random_Forest_Regression(X_train, Y_train, outerK, innerK)
 
 %% Retrain on all training data with best params
 finalModel = fitrensemble(X_train_norm, Y_train, ...

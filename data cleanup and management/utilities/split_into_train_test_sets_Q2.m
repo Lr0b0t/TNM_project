@@ -59,7 +59,7 @@ if any(allMissing)
 end
 
 % Randomly split into train/test (e.g., 80/20)
-rng(2, 'twister'); % For reproducibility
+rng(8, 'twister'); % For reproducibility
 nTotal = height(data);
 nTest = round(0.2 * nTotal);
 

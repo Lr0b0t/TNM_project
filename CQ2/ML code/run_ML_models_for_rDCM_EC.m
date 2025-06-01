@@ -61,7 +61,7 @@ mu_latent_withIds = [uniqueIDs mu_latent]; % the order that the letents are stor
 mu_latent_withIds = mu_latent_withIds(ismember(mu_latent_withIds(:,1), trainIDs), :);
 
 % keep only the col with the score for Y_train
-targetScore = 'CDSOB_followUp'; %'GDTOTAL_followUp'; % MMSCORE_followUp
+targetScore = 'MMSCORE_followUp'; %'CDSOB_followUp'; %'GDTOTAL_followUp'; % MMSCORE_followUp
 scoreIdx = strcmp(trainData.Properties.VariableNames, targetScore);
 
 Y_train_withID = trainData{:, [1, find(scoreIdx)]};
