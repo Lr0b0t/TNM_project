@@ -1,7 +1,5 @@
 
 
-# Neuroimaging Pipeline for Clinical Questions in TBI, PTSD, and Dementia
-
 This repository contains a modular neuroimaging analysis pipeline, structured into separate stages corresponding to distinct clinical questions and tasks. The code supports analysis of resting-state fMRI (rsfMRI) data and machine learning-based outcome prediction across several neurological and psychiatric conditions.
 
 Before running julia code, you can execute setup.jl located in the root of this repository. This script sets up necessary Julia environments, installs required packages, and ensures consistent reproducibility across the pipeline.
