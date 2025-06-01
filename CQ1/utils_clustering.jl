@@ -428,3 +428,125 @@ function accuracy_score(true_labels::Vector{Int}, pred_labels::Vector{Int})
     end
     return best
 end
+
+
+function load_brainnetome_labels(filepath::String)
+    lines = readlines(filepath)[2:end]  # skip first line
+    labels = [split(line)[2] for line in lines]
+    return labels
+end
+function assign_region_groups(labels::Vector{String})
+    groups = Dict(
+        "Prefrontal"    => r"^A(8|9|10|11|12|44|45|46|47)|^IF|^IFS",
+        "Motor"         => r"^A4|^A6|^A1/2/3",
+        "Parietal"      => r"^A5|^A7|^A39|^A40|^Precuneus|^dmPOS|^vmPOS|^POS|^Cun",
+        "Temporal"      => r"^A20|^A21|^A22|^A37|^TE|^TP|^STS|^TI|^TL",
+        "Occipital"     => r"LinG|CunG|iOccG|mOccG|OPC|V5|msOccG|lsOccG",
+        "Limbic"        => r"^A23|^A24|^A32|Amyg|Hipp|^CG|G_|rHipp|cHipp|mAmyg|lAmyg",
+        "Insula"        => r"Ia|Ig|Id",
+        "BasalGanglia"  => r"Ca|Pu|NAC|GP|vCa|dCa|dlPu|vmPu",
+        "Thalamus"      => r"tha"
+    )
+
+    assigned = String[]
+    for label in labels
+        found = false
+        for (group, pattern) in groups
+            if occursin(pattern, label)
+                push!(assigned, group)
+                found = true
+                break
+            end
+        end
+        if !found
+            push!(assigned, "Other")
+        end
+    end
+
+    return assigned
+end
+
+function compute_group_boundaries(group_labels::Vector{String})
+    unique_groups = unique(group_labels)
+    sorted = sort(unique_groups, by=g -> findfirst(x -> x == g, group_labels))
+
+    boundaries = Int[]
+    labels = String[]
+    for g in sorted
+        idxs = findall(x -> x == g, group_labels)
+        push!(boundaries, minimum(idxs))
+        push!(labels, g)
+    end
+
+    return labels, boundaries
+end
+
+function plot_grouped_connectivity(matrix::Matrix{Float64}, group_labels::Vector{String})
+    labels, boundaries = compute_group_boundaries(group_labels)
+    shifted_boundaries = [i == 1 || i == 6 ? b+3 : b + 10 for (i, b) in enumerate(boundaries)]
+
+
+    # Create main heatmap (no colorbar, red lines later)
+    p = heatmap(matrix;
+        xticks = (shifted_boundaries, labels),
+        yticks = (shifted_boundaries, labels),
+        xlabel = "Brain Region Groups",
+        ylabel = "Brain Region Groups",
+        title = "Grouped Connectivity Matrix",
+        colorbar = true,
+        aspect_ratio = 1,
+        size = (1000, 1000),
+        xrotation = 45,
+        tickfont = font(8)
+    )
+
+    for b in boundaries[2:end]
+        vline!(p, [b], lw=1.5, lc=:white, alpha=0.8, label=false)  # <--- no label
+        hline!(p, [b], lw=1.5, lc=:white, alpha=0.8, label=false)
+    end
+
+    display(p)
+end
+
+
+function plot_grouped_connectivity_pair(
+    matrix1::AbstractMatrix,
+    matrix2::AbstractMatrix,
+    group_labels::Vector{String},
+    title1::String,
+    title2::String
+)
+    labels, boundaries = compute_group_boundaries(group_labels)
+    shifted_boundaries = [i == 1 || i == 6 ? b + 3 : b + 10 for (i, b) in enumerate(boundaries)]
+
+    # Prepare common plot attributes
+    common_opts = (
+        xticks = (shifted_boundaries, labels),
+        yticks = (shifted_boundaries, labels),
+        xlabel = "Brain Region Groups",
+        ylabel = "Brain Region Groups",
+        aspect_ratio = 1,
+        size = (1000, 450),
+        xrotation = 45,
+        tickfont = font(8),
+        colorbar = false,
+        legend = false
+    )
+
+    # First heatmap
+    p1 = heatmap(Float64.(matrix1); title=title1, common_opts...)
+    for b in boundaries[2:end]
+        vline!(p1, [b], lw=1.5, lc=:white, alpha=0.8, label=false)
+        hline!(p1, [b], lw=1.5, lc=:white, alpha=0.8, label=false)
+    end
+
+    # Second heatmap
+    p2 = heatmap(Float64.(matrix2); title=title2, common_opts...)
+    for b in boundaries[2:end]
+        vline!(p2, [b], lw=1.5, lc=:white, alpha=0.8, label=false)
+        hline!(p2, [b], lw=1.5, lc=:white, alpha=0.8, label=false)
+    end
+
+    # Combine and show
+    plot(p1, p2, layout=(1, 2))
+end
