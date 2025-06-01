@@ -1,4 +1,0 @@
-SCRNO,ID,RID,SITEID,VISCODE,USERDATE,USERDATE2,RECNO,EXAMDATE,WDRAWTYPE,WDPARTIAL,WDREASON,WDPARTCOM,WDBURDEN,WDDETAILS,WDFOLLOWUP,update_stamp
-344638,296,4159,11,m12,2020-03-31,NaT,1,2020-02-18,1,NaN,21,"Study reaching funding termination. Subject had Baseline clinic visit 25-Sep-2018, but due to site delays (including new consent process allowing additional travel reimbursement which subject required), subject could not be scheduled for BL PETs in a timely manner. Subject had Y1 clinic visit and MRI 21-Oct-2019, followed by Amyvid 15-Jan-2020 and Tau PET 16-Jan-2020. Originally these were submitted as Y1 scans, but converted to BL scans. Due to the timeline, sponsor requested subject have EDW.",-4,-4,4,2020-03-31 22:09:45.000
-166034,78,1905,15,sc,2014-11-19,NaT,NaN,NaT,NaN,NaN,-4,"-4",-4,-4,-4,2014-11-20 02:08:45.000
-162531,68,1775,14,sc,2014-06-09,NaT,NaN,NaT,NaN,NaN,-4,"-4",-4,-4,-4,2014-06-10 02:07:44.000
