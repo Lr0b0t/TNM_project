@@ -550,3 +550,98 @@ function plot_grouped_connectivity_pair(
     # Combine and show
     plot(p1, p2, layout=(1, 2))
 end
+
+function unflatten_simple(flat_data::Matrix{Float64})
+    # Check size
+    @assert size(flat_data, 1) == 246 * 246 "Input does not match 246×246 shape"
+    
+    # Initialize output array
+    full_data = zeros(Float64, 246, 246, size(flat_data, 2))
+
+    # Reshape each column back into a 246×246 matrix
+    for i in 1:size(flat_data, 2)
+        full_data[:, :, i] .= reshape(flat_data[:, i], 246, 246)
+    end
+
+    return full_data
+end
+
+
+function threshold_top_percent(matrix::AbstractMatrix, percent::Float64)
+    n = size(matrix, 1)
+    off_diag_mask = .!Matrix(I, n, n)  # Mask to exclude diagonal
+
+    # Extract off-diagonal absolute values
+    weights = abs.(matrix[off_diag_mask])
+    sorted = sort(weights, rev=true)
+
+    # Get threshold value at desired percentile
+    idx = floor(Int, percent / 100 * length(sorted))
+    idx = max(idx, 1)  # prevent zero index
+    thresh = sorted[idx]
+
+    # Threshold full matrix
+    binary = abs.(matrix) .>= thresh
+    binary[diagind(binary)] .= false  # zero diagonal
+
+    return binary
+end
+
+
+"""
+Threshold the top `percent` strongest connections in a connectivity matrix.
+
+Args:
+  - matrix: 2D square matrix (e.g., 246×246)
+  - percent: Percent of strongest absolute connections to retain
+
+Returns:
+  - binary matrix of same size, with top connections marked as `true`
+"""
+function threshold_top_percent(matrix::AbstractMatrix, percent::Float64)
+    # Get all off-diagonal absolute values
+    weights = [abs(matrix[i, j]) for i in 1:size(matrix, 1), j in 1:size(matrix, 2) if i != j]
+    sorted = sort(weights, rev=true)
+
+    # Compute threshold
+    idx = max(1, floor(Int, percent / 100 * length(sorted)))
+    thresh = sorted[idx]
+
+    # Apply threshold
+    binary = abs.(matrix) .>= thresh
+    binary[diagind(binary)] .= false  # remove diagonal
+
+    return binary
+end
+
+"""
+Use Otsu's method (graythresh in MATLAB) to threshold connectivity matrix.
+
+Args:
+  - matrix: 2D square matrix (e.g., 246×246)
+
+Returns:
+  - binary matrix where values > threshold are marked `true`
+"""
+function threshold_otsu(matrix::AbstractMatrix)
+    flat_vals = vec(abs.(matrix))  # flatten and abs
+    thresh = otsu_threshold(flat_vals)
+    binary = abs.(matrix) .> thresh
+    binary[diagind(binary)] .= false
+    return binary
+end
+
+function load_brainnetome_region_labels(filepath::String)
+    lines = readlines(filepath)
+    region_labels = String[]
+
+    for line in lines[2:end]  # skip the first line ("0 Unknown ...")
+        parts = split(strip(line))
+        if length(parts) >= 2
+            push!(region_labels, parts[2])  # short region label
+        end
+    end
+
+    @assert length(region_labels) == 246 "Expected 246 regions, got $(length(region_labels))"
+    return region_labels
+end
