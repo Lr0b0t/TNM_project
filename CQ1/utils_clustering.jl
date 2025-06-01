@@ -490,8 +490,8 @@ function plot_grouped_connectivity(matrix::Matrix{Float64}, group_labels::Vector
     p = heatmap(matrix;
         xticks = (shifted_boundaries, labels),
         yticks = (shifted_boundaries, labels),
-        xlabel = "Brain Region Groups",
-        ylabel = "Brain Region Groups",
+        xlabel = "Brain Region",
+        ylabel = "Brain Region",
         title = "Grouped Connectivity Matrix",
         colorbar = true,
         aspect_ratio = 1,
@@ -523,14 +523,16 @@ function plot_grouped_connectivity_pair(
     common_opts = (
         xticks = (shifted_boundaries, labels),
         yticks = (shifted_boundaries, labels),
-        xlabel = "Brain Region Groups",
-        ylabel = "Brain Region Groups",
+        xlabel = "Brain Region",
+        ylabel = "Brain Region",
         aspect_ratio = 1,
         size = (1000, 450),
         xrotation = 45,
         tickfont = font(8),
         colorbar = false,
-        legend = false
+        legend = false, 
+        left_margin = 10mm, 
+        bottom_margin = 10mm
     )
 
     # First heatmap
